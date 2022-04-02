@@ -15,8 +15,10 @@ function App() {
   }, []);
 
   useEffect(() => {
-    console.log('useEffect - https://atb-online-store-api/products');
-    fetch('https://atb-online-store-api/products', {
+    console.log(
+      'useEffect - https://atb-online-store-api.herokuapp.com/products'
+    );
+    fetch('https://atb-online-store-api.herokuapp.com/products', {
       headers: {
         Accept: 'application/json',
       },
