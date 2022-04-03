@@ -16,9 +16,9 @@ const Product = ({
     // var myHeaders = new Headers();
     // myHeaders.append('Content-Type', 'application/json');
 
+    // fetch('http://localhost:8080/cart',
     fetch(
-      'http://localhost:8080/cart',
-      // fetch('https://atb-online-store-api.herokuapp.com/products',
+      'https://atb-online-store-api.herokuapp.com/cart',
 
       // {
       //   method: 'POST',
