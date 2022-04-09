@@ -1,26 +1,24 @@
 import React, { useState, useEffect } from 'react';
 import css from './Registration.module.css';
 import { setCookie, deleteCookie } from '../../utils/cookieHandlers';
+import { useNavigate } from 'react-router-dom';
 
-const Registration = ({ registrationType }) => {
+const Registration = ({ registrationType, onLoginChange }) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [passwordConfirmation, setPasswordConfirmation] = useState('');
+  const navigate = useNavigate();
+
+  const loginChangeHandler = (status) => {
+    onLoginChange(status);
+  };
 
   useEffect(() => {
     if (registrationType === 'LOG_OUT') {
       console.log('logging out now.... ');
-      // TODO see if I can delete the session/cookie from the server
-      // onLogOut();
       deleteCookie('accessToken');
-
-      fetch('http://localhost:8080/log-out', {
-        method: 'DELETE',
-        headers: {
-          'Content-Type': 'application/json',
-          Accept: 'application/json',
-        },
-      });
+      loginChangeHandler('NOT_LOGGED_IN');
+      navigate('/');
     }
   }, [registrationType]);
 
@@ -28,10 +26,13 @@ const Registration = ({ registrationType }) => {
     console.log('you are logged in!');
     // create a cookie to store the user's encrypted login credentials
     setCookie('accessToken', token, 1);
+    loginChangeHandler('LOGGED_IN');
+    navigate('/');
   };
 
   const handleUnsuccessfulAuth = (response) => {
     console.log('something went wrong...');
+    navigate('/');
   };
 
   const handleEmailChange = (event) => {
