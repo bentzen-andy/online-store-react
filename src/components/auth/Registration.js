@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import css from './Registration.module.css';
+import { setCookie, deleteCookie } from '../../utils/cookieHandlers';
 
 const Registration = ({ registrationType }) => {
   const [email, setEmail] = useState('');
@@ -11,6 +12,7 @@ const Registration = ({ registrationType }) => {
       console.log('logging out now.... ');
       // TODO see if I can delete the session/cookie from the server
       // onLogOut();
+      deleteCookie('accessToken');
 
       fetch('http://localhost:8080/log-out', {
         method: 'DELETE',
@@ -22,11 +24,10 @@ const Registration = ({ registrationType }) => {
     }
   }, [registrationType]);
 
-  const handleSuccessfulAuth = (user) => {
+  const handleSuccessfulAuth = (token) => {
     console.log('you are logged in!');
-    // console.log(location);
-    // if (onLogIn) onLogIn(user); // TODO see if I can set the cookie directly wiht the server
-    // if (onSignUp) onSignUp(user);
+    // create a cookie to store the user's encrypted login credentials
+    setCookie('accessToken', token, 1);
   };
 
   const handleUnsuccessfulAuth = (response) => {
@@ -51,7 +52,7 @@ const Registration = ({ registrationType }) => {
   const handleSubmitSignUp = (event) => {
     event.preventDefault();
     console.log('handleSubmitSignUp');
-    fetch('http://localhost:8080/registrations', {
+    fetch('http://localhost:8080/registration', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -69,7 +70,7 @@ const Registration = ({ registrationType }) => {
       .then((response) => {
         console.log('response');
         console.log(response);
-        if (response.status === 'created') handleSuccessfulAuth(response.nonce);
+        if (response.status === 'created') handleSuccessfulAuth(response.token);
         else handleUnsuccessfulAuth(response);
       })
       .catch((err) => console.error(err));
@@ -80,7 +81,7 @@ const Registration = ({ registrationType }) => {
 
   const handleSubmitLogIn = (event) => {
     event.preventDefault();
-    fetch('http://localhost:8080/sessions', {
+    fetch('http://localhost:8080/login', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -96,9 +97,10 @@ const Registration = ({ registrationType }) => {
     })
       .then((response) => response.json())
       .then((response) => {
+        console.log('response');
         console.log(response);
-        if (response.logged_in === 'IS_LOGGED_IN')
-          handleSuccessfulAuth(response.nonce);
+        if (response.status === 'LOGGED_IN')
+          handleSuccessfulAuth(response.token);
         else handleUnsuccessfulAuth(response);
       })
       .catch((err) => console.error(err));
