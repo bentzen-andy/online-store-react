@@ -32,7 +32,6 @@ const Registration = ({ registrationType, onLoginChange }) => {
 
   const handleUnsuccessfulAuth = (response) => {
     console.log('something went wrong...');
-    navigate('/');
   };
 
   const handleEmailChange = (event) => {
