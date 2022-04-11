@@ -8,6 +8,7 @@ const useCredentials = () => {
   const [loginState, setLoginState] = useState('NOT_LOGGED_IN');
   const [email, setEmail] = useState(null);
   const [shoppingCart, setShoppingCart] = useState([]);
+  const [cartQuantity, setCartQuantity] = useState(0);
 
   const navigate = useNavigate();
   const handleSuccessfulAuth = (token) => {
@@ -119,6 +120,12 @@ const useCredentials = () => {
       body: JSON.stringify({ accessToken, productID }),
     })
       .then((res) => res.json())
+      .then((res) => {
+        let cartQty = shoppingCart.reduce((prev, curr) => prev + curr.qty, 0);
+        console.log('addToCart - cartQuantity');
+        console.log(cartQty);
+        setCartQuantity(cartQty);
+      })
       .then((res) => console.log(res));
   };
 
@@ -141,6 +148,7 @@ const useCredentials = () => {
     loginState,
     email,
     shoppingCart,
+    cartQuantity,
     checkCredentials,
     logOff,
     logIn,

@@ -1,14 +1,18 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState, useCallback, useMemo } from 'react';
+import useCookie from '../../hooks/useCookie';
 import { Link } from 'react-router-dom';
 import useCredentials from '../../hooks/useCredentials';
 import css from './Cart.module.css';
 
-const Cart = ({ loginState, email }) => {
-  const { shoppingCart, getShoppingCart } = useCredentials();
+const Cart = ({ loginState, email, cartClicks }) => {
+  const { getCookie } = useCookie();
+  // const [shoppingCart, setShoppingCart] = useState('');
+  // const [memoizedShoppingCart, setMemoizedShoppingCart] = useState([]);
+  const { shoppingCart, cartQuantity, getShoppingCart } = useCredentials();
 
   useEffect(() => {
     getShoppingCart();
-  }, [getShoppingCart]);
+  }, [cartClicks]);
 
   console.log('Cart - shoppingCart');
   console.log(shoppingCart);
@@ -20,7 +24,7 @@ const Cart = ({ loginState, email }) => {
     ? shoppingCart.reduce((prev, curr) => prev + curr.qty, 0)
     : 0;
 
-  console.log('cartQty');
+  console.log('Cart - cartQty');
   console.log(cartQty);
 
   return (

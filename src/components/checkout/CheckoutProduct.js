@@ -5,7 +5,8 @@ const CheckoutProduct = ({ name, qty, price }) => {
 
   return (
     <div>
-      Item: {name} --- Qty: {qty} --- Price: {centsToDollars(price * qty)}
+      Checkout
+      {/* Item: {name} --- Qty: {qty} --- Price: {centsToDollars(price * qty)} */}
     </div>
   );
 };
