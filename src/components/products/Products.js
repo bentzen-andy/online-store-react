@@ -28,7 +28,7 @@ const Products = () => {
           category={p.category}
           imageUrl={p.image_url}
           numberInStock={p.number_in_stock}
-          id={p._id}
+          productID={p._id}
         />
       ))}
     </div>

@@ -1,33 +1,34 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
+import { Link } from 'react-router-dom';
+import useCredentials from '../../hooks/useCredentials';
 import css from './Cart.module.css';
-import { getCookie } from '../../utils/cookieHandlers';
 
-const Cart = ({ loginStatus }) => {
-  const [user, setUser] = useState('Not logged in');
+const Cart = ({ loginState, email }) => {
+  const { shoppingCart, getShoppingCart } = useCredentials();
 
   useEffect(() => {
-    const accessToken = getCookie('accessToken');
-    fetch('http://localhost:8080/login/check-username', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        Accept: 'application/json',
-      },
-      body: JSON.stringify({
-        accessToken,
-      }),
-    })
-      .then((response) => response.json())
-      .then((response) => {
-        console.log('response');
-        console.log(response);
-        if (response.status === 'LOGGED_IN') setUser(response.email);
-        else setUser('Not logged in');
-      })
-      .catch((err) => console.error(err));
-  }, [loginStatus]);
+    getShoppingCart();
+  }, [getShoppingCart]);
 
-  return <div className={css['cart']}>username: {user}</div>;
+  console.log('Cart - shoppingCart');
+  console.log(shoppingCart);
+
+  const userText =
+    loginState === 'LOGGED_IN' ? `Logged in as: ${email}` : 'Not logged in';
+
+  const cartQty = shoppingCart
+    ? shoppingCart.reduce((prev, curr) => prev + curr.qty, 0)
+    : 0;
+
+  console.log('cartQty');
+  console.log(cartQty);
+
+  return (
+    <div className={css['cart']}>
+      {userText}
+      {loginState === 'LOGGED_IN' && <Link to="/check-out">({cartQty})</Link>}
+    </div>
+  );
 };
 
 export default Cart;

@@ -1,12 +1,13 @@
 import { useState } from 'react';
-import { getCookie, setCookie, deleteCookie } from './useCookie';
+import useCookie from './useCookie';
 import { useNavigate } from 'react-router-dom';
 
 // main function of functions (returns all functions in an object)
 const useCredentials = () => {
+  const { getCookie, setCookie, deleteCookie } = useCookie();
   const [loginState, setLoginState] = useState('NOT_LOGGED_IN');
   const [email, setEmail] = useState(null);
-  const [shoppingCart, setShoppingCart] = useState({});
+  const [shoppingCart, setShoppingCart] = useState([]);
 
   const navigate = useNavigate();
   const handleSuccessfulAuth = (token) => {
@@ -34,10 +35,14 @@ const useCredentials = () => {
     })
       .then((response) => response.json())
       .then((response) => {
+        console.log('checkCredentials');
         console.log('response');
         console.log(response);
-        if (response.status === 'LOGGED_IN') setLoginState('LOGGED_IN');
-        else setLoginState('NOT_LOGGED_IN');
+        if (response.status === 'LOGGED_IN') {
+          setLoginState('LOGGED_IN');
+          setEmail(response.email);
+          // setShoppingCart(response.products);
+        } else setLoginState('NOT_LOGGED_IN');
       })
       .catch((err) => console.error(err));
   };
@@ -46,7 +51,8 @@ const useCredentials = () => {
     deleteCookie('accessToken');
     setLoginState('NOT_LOGGED_IN');
     setEmail(null);
-    setShoppingCart({});
+    // setShoppingCart([]);
+    navigate('/');
   };
 
   const logIn = (email, password) => {
@@ -100,6 +106,37 @@ const useCredentials = () => {
       .catch((err) => console.error(err));
   };
 
+  const addToCart = (productID) => {
+    console.log('addToCart - productID');
+    console.log(productID);
+    const accessToken = getCookie('accessToken');
+    fetch('http://localhost:8080/add-to-cart', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        Accept: 'application/json',
+      },
+      body: JSON.stringify({ accessToken, productID }),
+    })
+      .then((res) => res.json())
+      .then((res) => console.log(res));
+  };
+
+  const getShoppingCart = () => {
+    console.log('getShoppingCart');
+    const accessToken = getCookie('accessToken');
+    fetch('http://localhost:8080/cart', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        Accept: 'application/json',
+      },
+      body: JSON.stringify({ accessToken }),
+    })
+      .then((res) => res.json())
+      .then((res) => setShoppingCart(res.products));
+  };
+
   return {
     loginState,
     email,
@@ -108,6 +145,8 @@ const useCredentials = () => {
     logOff,
     logIn,
     registerUser,
+    addToCart,
+    getShoppingCart,
   };
 };
 
