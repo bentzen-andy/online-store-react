@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import Cart from './Cart';
 import css from './Header.module.css';
 
-const Header = ({ loginState, email }) => {
+const Header = ({ loginState, email, shoppingCartQty }) => {
   return (
     <header className={css['header']}>
       <ul>
@@ -29,8 +29,18 @@ const Header = ({ loginState, email }) => {
           </li>
         )}
 
+        {loginState === 'LOGGED_IN' && (
+          <li>
+            <Link to="/check-out">Checkout</Link>
+          </li>
+        )}
+
         <li>
-          <Cart loginState={loginState} email={email} />
+          <Cart
+            loginState={loginState}
+            email={email}
+            shoppingCartQty={shoppingCartQty}
+          />
         </li>
       </ul>
     </header>

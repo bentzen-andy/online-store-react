@@ -7,7 +7,7 @@ const Checkout = () => {
 
   useEffect(() => {
     getShoppingCart();
-  }, [getShoppingCart]);
+  }, []);
 
   console.log('Checkout - shoppingCart');
   console.log(shoppingCart);

@@ -8,15 +8,32 @@ import Registration from '../auth/Registration';
 import useCredentials from '../../hooks/useCredentials';
 
 const App = () => {
-  const { loginState, email, checkCredentials } = useCredentials();
+  const {
+    loginState,
+    email,
+    shoppingCartQty,
+    checkCredentials,
+    getShoppingCart,
+  } = useCredentials();
 
   useEffect(() => {
     checkCredentials();
   }, [checkCredentials]);
 
+  useEffect(() => {
+    getShoppingCart();
+  }, []);
+
+  console.log('App - shoppingCarQty');
+  console.log(shoppingCartQty);
+
   return (
     <div className={css['app']}>
-      <Header loginState={loginState} email={email} />
+      <Header
+        loginState={loginState}
+        email={email}
+        shoppingCartQty={shoppingCartQty}
+      />
       <Routes>
         <Route path="/" element={<Products />} />
         <Route path="/check-out" element={<Checkout />} />
