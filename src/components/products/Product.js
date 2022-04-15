@@ -1,5 +1,4 @@
 import React from 'react';
-import useCredentials from '../../hooks/useCredentials';
 import css from './Product.module.css';
 
 const Product = ({
@@ -12,14 +11,8 @@ const Product = ({
   productID,
   onClickAddToCart,
 }) => {
-  const { addToCart } = useCredentials();
-
   const handleAddToCart = (event) => {
     event.preventDefault();
-    console.log('Product - handleAddToCart - productID');
-    console.log(productID);
-    console.log(typeof productID);
-    // addToCart(productID);
     const product = {
       name,
       description,

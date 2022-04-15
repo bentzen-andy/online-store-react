@@ -8,44 +8,33 @@ import Registration from '../auth/Registration';
 import useCredentials from '../../hooks/useCredentials';
 
 const App = () => {
-  const {
-    loginState,
-    email,
-    // shoppingCartQty,
-    checkCredentials,
-    // getShoppingCart,
-  } = useCredentials();
-
+  const { loginState, email, checkCredentials } = useCredentials();
   const [cart, setCart] = useState([]);
 
   useEffect(() => {
+    console.log('App is rendering');
     checkCredentials();
   }, [checkCredentials]);
 
-  // useEffect(() => {
-  //   getShoppingCart();
-  //   // eslint-disable-next-line react-hooks/exhaustive-deps
-  // }, [shoppingCartQty]);
+  const clearShoppingCartOnLogOff = () => {
+    setCart([]);
+  };
 
   const handleAddToCartClick = (product) => {
-    // setTimeout(() => getShoppingCart(), 500);
     setCart((currCart) => {
       let cart = [...currCart];
       const index = cart.findIndex(
         (prod) => prod.productID === product.productID
       );
+      // handel case where product is already in cart; just add to the quantity.
       if (index >= 0) {
-        console.log('index');
-        console.log(index);
-        console.log('cart[index]');
-        console.log(cart[index]);
         cart[index].quantity = cart[index].quantity + 1;
-      } else {
+      }
+      // handel case for when the product is not already in the cart.
+      else {
         product.quantity = 1;
         cart.push(product);
       }
-      console.log('cart');
-      console.log(cart);
 
       return cart;
     });
@@ -70,7 +59,12 @@ const App = () => {
         />
         <Route
           path="/log-out"
-          element={<Registration registrationType="LOG_OUT" />}
+          element={
+            <Registration
+              registrationType="LOG_OUT"
+              clearShoppingCartOnLogOff={clearShoppingCartOnLogOff}
+            />
+          }
         />
       </Routes>
     </div>

@@ -4,13 +4,11 @@ import { useNavigate } from 'react-router-dom';
 
 // main function of functions (returns all functions in an object)
 const useCredentials = () => {
+  const navigate = useNavigate();
   const { getCookie, setCookie, deleteCookie } = useCookie();
   const [loginState, setLoginState] = useState('NOT_LOGGED_IN');
   const [email, setEmail] = useState(null);
-  const [shoppingCart, setShoppingCart] = useState([]);
-  const [shoppingCartQty, setShoppingCartQty] = useState(0);
 
-  const navigate = useNavigate();
   const handleSuccessfulAuth = (token) => {
     console.log('you are logged in!');
     // create a cookie to store the user's encrypted login credentials
@@ -42,8 +40,10 @@ const useCredentials = () => {
         if (response.status === 'LOGGED_IN') {
           setLoginState('LOGGED_IN');
           setEmail(response.email);
-          // setShoppingCart(response.products);
-        } else setLoginState('NOT_LOGGED_IN');
+        } else {
+          setLoginState('NOT_LOGGED_IN');
+          setEmail('');
+        }
       })
       .catch((err) => console.error(err));
   };
@@ -51,8 +51,7 @@ const useCredentials = () => {
   const logOff = () => {
     deleteCookie('accessToken');
     setLoginState('NOT_LOGGED_IN');
-    setEmail(null);
-    // setShoppingCart([]);
+    setEmail('');
     navigate('/');
   };
 
@@ -107,64 +106,13 @@ const useCredentials = () => {
       .catch((err) => console.error(err));
   };
 
-  const addToCart = (productID) => {
-    console.log('addToCart - productID');
-    console.log(productID);
-    const accessToken = getCookie('accessToken');
-    fetch('http://localhost:8080/add-to-cart', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        Accept: 'application/json',
-      },
-      body: JSON.stringify({ accessToken, productID }),
-    })
-      .then((res) => res.json())
-      .then((res) => {
-        let cartQty = shoppingCart.reduce((prev, curr) => prev + curr.qty, 0);
-        console.log('addToCart - cartQuantity');
-        console.log(cartQty);
-        setCartQuantity(cartQty);
-      })
-      .then((res) => console.log(res));
-  };
-
-  const updateCartQty = (cartContents) => {
-    let qty = cartContents.reduce((prev, curr) => prev + curr.qty, 0);
-    console.log('updateCartQty - qty');
-    console.log(qty);
-    setShoppingCartQty(qty);
-  };
-
-  const getShoppingCart = () => {
-    console.log('getShoppingCart');
-    const accessToken = getCookie('accessToken');
-    fetch('http://localhost:8080/cart', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        Accept: 'application/json',
-      },
-      body: JSON.stringify({ accessToken }),
-    })
-      .then((res) => res.json())
-      .then((res) => {
-        setShoppingCart(res.products);
-        updateCartQty(res.products);
-      });
-  };
-
   return {
     loginState,
     email,
-    shoppingCart,
-    shoppingCartQty,
     checkCredentials,
     logOff,
     logIn,
     registerUser,
-    addToCart,
-    getShoppingCart,
   };
 };
 

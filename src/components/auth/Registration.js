@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import useCredentials from '../../hooks/useCredentials';
 import css from './Registration.module.css';
 
-const Registration = ({ registrationType, onLoginChange }) => {
+const Registration = ({ registrationType, clearShoppingCartOnLogOff }) => {
   const { logOff, logIn, registerUser } = useCredentials();
 
   const [email, setEmail] = useState('');
@@ -11,24 +11,21 @@ const Registration = ({ registrationType, onLoginChange }) => {
 
   useEffect(() => {
     if (registrationType === 'LOG_OUT') {
-      console.log('logging out now.... ');
+      clearShoppingCartOnLogOff();
       logOff();
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [registrationType]);
 
   const handleEmailChange = (event) => {
-    // console.log(event.target.value);
     setEmail(event.target.value);
   };
 
   const handlePasswordChange = (event) => {
-    // console.log(event.target.value);
     setPassword(event.target.value);
   };
 
   const handlePasswordConfirmationChange = (event) => {
-    // console.log(event.target.value);
     setPasswordConfirmation(event.target.value);
   };
 

@@ -3,13 +3,6 @@ import React from 'react';
 const CartProduct = ({ name, quantity, price }) => {
   const centsToDollars = (num) => `$${(num / 100.0).toFixed(2)}`;
 
-  console.log('name');
-  console.log(name);
-  console.log('quantity');
-  console.log(quantity);
-  console.log('price');
-  console.log(price);
-
   return (
     <div>
       Item: {name} --- Qty: {quantity} --- Price:{' '}
