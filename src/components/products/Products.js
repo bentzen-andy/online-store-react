@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import Product from '../products/Product';
 import css from './Products.module.css';
 
-const Products = ({ onButtonClick }) => {
+const Products = ({ onClickAddToCart }) => {
   const [products, setProducts] = useState([]);
 
   useEffect(() => {
@@ -29,7 +29,7 @@ const Products = ({ onButtonClick }) => {
           imageUrl={p.image_url}
           numberInStock={p.number_in_stock}
           productID={p._id}
-          onButtonClick={onButtonClick}
+          onClickAddToCart={onClickAddToCart}
         />
       ))}
     </div>

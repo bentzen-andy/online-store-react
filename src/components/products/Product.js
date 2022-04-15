@@ -10,7 +10,7 @@ const Product = ({
   imageUrl,
   numberInStock,
   productID,
-  onButtonClick,
+  onClickAddToCart,
 }) => {
   const { addToCart } = useCredentials();
 
@@ -19,8 +19,18 @@ const Product = ({
     console.log('Product - handleAddToCart - productID');
     console.log(productID);
     console.log(typeof productID);
-    addToCart(productID);
-    onButtonClick();
+    // addToCart(productID);
+    const product = {
+      name,
+      description,
+      price,
+      category,
+      imageUrl,
+      numberInStock,
+      productID,
+    };
+
+    onClickAddToCart(product);
   };
 
   const centsToDollars = (num) => `$${(num / 100.0).toFixed(2)}`;
