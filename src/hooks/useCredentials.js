@@ -25,8 +25,8 @@ const useCredentials = () => {
 
   const checkCredentials = async () => {
     const accessToken = getCookie('accessToken');
-    // fetch('http://localhost:8080/login/check-username', {
-    fetch('https://atb-online-store-api.herokuapp.com/login/check-username', {
+    fetch('http://localhost:8080/login/check-username', {
+      // fetch('https://atb-online-store-api.herokuapp.com/login/check-username', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -60,8 +60,8 @@ const useCredentials = () => {
   };
 
   const logIn = (email, password) => {
-    // fetch('http://localhost:8080/login', {
-    fetch('https://atb-online-store-api.herokuapp.com/login', {
+    fetch('http://localhost:8080/login', {
+      // fetch('https://atb-online-store-api.herokuapp.com/login', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -87,8 +87,8 @@ const useCredentials = () => {
   };
 
   const registerUser = (email, password, passwordConfirmation) => {
-    // fetch('http://localhost:8080/registration', {
-    fetch('https://atb-online-store-api.herokuapp.com/registration', {
+    fetch('http://localhost:8080/registration', {
+      // fetch('https://atb-online-store-api.herokuapp.com/registration', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',

@@ -1,11 +1,12 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+
 const useProducts = () => {
   const [products, setProducts] = useState([]);
   const [productCategories, setProductCategories] = useState({});
 
-  const getProducts = () => {
-    // fetch('http://localhost:8080/products', {
-    fetch('https://atb-online-store-api.herokuapp.com/products', {
+  useEffect(() => {
+    fetch('http://localhost:8080/products', {
+      // fetch('https://atb-online-store-api.herokuapp.com/products', {
       headers: {
         Accept: 'application/json',
       },
@@ -13,27 +14,25 @@ const useProducts = () => {
       .then((response) => response.json())
       .then((data) => setProducts(data.products))
       .catch((err) => console.log(err));
-  };
+  }, []);
 
-  const getProductCategories = () => {
-    const categories = {};
+  useEffect(() => {
+    const productCategories = {};
     products.map((prod) => {
-      if (!categories[`${prod.category}`]) {
-        categories[`${prod.category}`] = [];
+      if (!productCategories[`${prod.category}`]) {
+        productCategories[`${prod.category}`] = [];
       }
-      categories[`${prod.category}`].push(prod.slug);
+      productCategories[`${prod.category}`].push(prod.slug);
       return null;
     });
-    setProductCategories(categories);
-    console.log('categories');
-    console.log(categories);
-  };
+    setProductCategories(productCategories);
+    console.log('productCategories');
+    console.log(productCategories);
+  }, [products]);
 
   return {
     products,
     productCategories,
-    getProducts,
-    getProductCategories,
   };
 };
 

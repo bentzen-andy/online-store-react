@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { Routes, Route } from 'react-router-dom';
 import Home from '../home/Home';
 import Header from '../header/Header';
@@ -10,33 +10,13 @@ import useCredentials from '../../hooks/useCredentials';
 import useCart from '../../hooks/useCart';
 import OrderConfirmation from '../cart/OrderConfirmation';
 import Product from '../products/Product';
+import useProducts from '../../hooks/useProducts';
 
 const App = () => {
   const { loginState, email, checkCredentials } = useCredentials();
+  const { products, productCategories } = useProducts();
   const { cart, addProductToCart, changeProductQuantity, emptyShoppingCart } =
     useCart();
-  const [products, setProducts] = useState([]);
-
-  useEffect(() => {
-    // fetch('http://localhost:8080/products', {
-    fetch('https://atb-online-store-api.herokuapp.com/products', {
-      headers: {
-        Accept: 'application/json',
-      },
-    })
-      .then((response) => response.json())
-      .then((data) => setProducts(data.products))
-      .catch((err) => console.log(err));
-  }, []);
-
-  const productCategories = {};
-  products.map((prod) => {
-    if (!productCategories[`${prod.category}`]) {
-      productCategories[`${prod.category}`] = [];
-    }
-    productCategories[`${prod.category}`].push(prod.slug);
-    return null;
-  });
 
   useEffect(() => {
     console.log('App is rendering');
@@ -56,9 +36,11 @@ const App = () => {
           const category = entries[0];
           return (
             <Route
+              key={category}
               path={`/${category}`}
               element={
                 <ProductLinks
+                  key={category}
                   category={category}
                   products={products.filter(
                     (prod) => prod.category === category
