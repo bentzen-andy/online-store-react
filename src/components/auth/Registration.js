@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import useCredentials from '../../hooks/useCredentials';
 import css from './Registration.module.css';
 
-const Registration = ({ registrationType, clearShoppingCartOnLogOff }) => {
+const Registration = ({ registrationType, emptyShoppingCart }) => {
   const { logOff, logIn, registerUser } = useCredentials();
 
   const [email, setEmail] = useState('');
@@ -11,7 +11,7 @@ const Registration = ({ registrationType, clearShoppingCartOnLogOff }) => {
 
   useEffect(() => {
     if (registrationType === 'LOG_OUT') {
-      clearShoppingCartOnLogOff();
+      emptyShoppingCart();
       logOff();
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps

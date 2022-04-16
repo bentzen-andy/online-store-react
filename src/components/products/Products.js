@@ -26,8 +26,8 @@ const Products = ({ onClickAddToCart }) => {
           description={p.description}
           price={p.price}
           category={p.category}
-          imageUrl={p.image_url}
-          numberInStock={p.number_in_stock}
+          imageUrl={p.imageURL}
+          numberInStock={p.numberInStock}
           productID={p._id}
           onClickAddToCart={onClickAddToCart}
         />
