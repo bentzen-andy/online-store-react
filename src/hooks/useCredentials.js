@@ -8,22 +8,25 @@ const useCredentials = () => {
   const { getCookie, setCookie, deleteCookie } = useCookie();
   const [loginState, setLoginState] = useState('NOT_LOGGED_IN');
   const [email, setEmail] = useState(null);
+  const [validationText, setValidationText] = useState(null);
 
   const handleSuccessfulAuth = (token) => {
     console.log('you are logged in!');
     // create a cookie to store the user's encrypted login credentials
     setCookie('accessToken', token, 1);
     setLoginState('LOGGED_IN');
+    setValidationText(null);
     navigate('/');
   };
   const handleUnsuccessfulAuth = (response) => {
     console.log('something went wrong...');
+    setValidationText(response.error);
   };
 
   const checkCredentials = async () => {
     const accessToken = getCookie('accessToken');
-    // fetch('http://localhost:8080/login/check-username', {
-    fetch('https://atb-online-store-api.herokuapp.com/login/check-username', {
+    fetch('http://localhost:8080/login/check-username', {
+      // fetch('https://atb-online-store-api.herokuapp.com/login/check-username', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -57,8 +60,8 @@ const useCredentials = () => {
   };
 
   const logIn = (email, password) => {
-    // fetch('http://localhost:8080/login', {
-    fetch('https://atb-online-store-api.herokuapp.com/login', {
+    fetch('http://localhost:8080/login', {
+      // fetch('https://atb-online-store-api.herokuapp.com/login', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -84,8 +87,8 @@ const useCredentials = () => {
   };
 
   const registerUser = (email, password, passwordConfirmation) => {
-    // fetch('http://localhost:8080/registration', {
-    fetch('https://atb-online-store-api.herokuapp.com/registration', {
+    fetch('http://localhost:8080/registration', {
+      // fetch('https://atb-online-store-api.herokuapp.com/registration', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -109,13 +112,17 @@ const useCredentials = () => {
       .catch((err) => console.error(err));
   };
 
+  const resetValidationText = () => setValidationText(null);
+
   return {
     loginState,
     email,
+    validationText,
     checkCredentials,
     logOff,
     logIn,
     registerUser,
+    resetValidationText,
   };
 };
 

@@ -45,7 +45,7 @@ const Cart = ({
           <button onClick={showOrderForm}>Create an Order</button>
         </div>
       )}
-      {orderFromIsVisible && (
+      {cartContents.length > 0 && orderFromIsVisible && (
         <OrderForm
           cartContents={cartContents}
           email={email}

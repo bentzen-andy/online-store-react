@@ -3,13 +3,15 @@ import useCredentials from '../../hooks/useCredentials';
 import css from './Registration.module.css';
 
 const Registration = ({ registrationType, emptyShoppingCart }) => {
-  const { logOff, logIn, registerUser } = useCredentials();
+  const { validationText, logOff, logIn, registerUser, resetValidationText } =
+    useCredentials();
 
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [enteredConfirmation, setPasswordConfirmation] = useState('');
 
   useEffect(() => {
+    resetValidationText();
     if (registrationType === 'LOG_OUT') {
       emptyShoppingCart();
       logOff();
@@ -92,6 +94,9 @@ const Registration = ({ registrationType, emptyShoppingCart }) => {
               required
             />
           </div>
+        )}
+        {validationText && (
+          <div className={css['validation-text']}>{validationText}</div>
         )}
         {registrationType === 'SIGN_UP' && (
           <button onClick={handleSubmitSignUp} className={css['btn']}>

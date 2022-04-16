@@ -7,3 +7,7 @@
   width: 12rem;
   height: 2rem;
 }
+
+.validation-text {
+  color: darkred;
+}

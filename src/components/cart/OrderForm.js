@@ -1,7 +1,10 @@
 import React from 'react';
 import useInput from '../../hooks/useInput';
+import InputUsStates from './InputUsStates';
+import InputMonth from './InputMonth';
 import { useNavigate } from 'react-router-dom';
 import css from './OrderForm.module.css';
+import { validateCreditCard } from '../../utils/validations';
 
 const OrderForm = ({ cartContents, email, emptyShoppingCart }) => {
   const navigate = useNavigate();
@@ -26,8 +29,8 @@ const OrderForm = ({ cartContents, email, emptyShoppingCart }) => {
     console.log('customerInfo');
     console.log(customerInfo);
 
-    fetch('https://atb-online-store-api.herokuapp.com/order', {
-      // fetch('http://localhost:8080/order', {
+    fetch('http://localhost:8080/order', {
+      // fetch('https://atb-online-store-api.herokuapp.com/order', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -114,7 +117,7 @@ const OrderForm = ({ cartContents, email, emptyShoppingCart }) => {
     valueChangeHandler: zipChangeHandler,
     valueBlurHandler: zipBlurHandler,
     reset: zipReset,
-  } = useInput((value) => value.length === 5);
+  } = useInput((value) => value.length === 5 && !isNaN(value));
 
   const {
     value: creditCard,
@@ -123,7 +126,7 @@ const OrderForm = ({ cartContents, email, emptyShoppingCart }) => {
     valueChangeHandler: creditCardChangeHandler,
     valueBlurHandler: creditCardBlurHandler,
     reset: creditCardReset,
-  } = useInput((value) => value.length === 16);
+  } = useInput((value) => validateCreditCard(value));
 
   const {
     value: creditCardExpireMonth,
@@ -132,7 +135,9 @@ const OrderForm = ({ cartContents, email, emptyShoppingCart }) => {
     valueChangeHandler: creditCardExpireMonthChangeHandler,
     valueBlurHandler: creditCardExpireMonthBlurHandler,
     reset: creditCardExpireMonthReset,
-  } = useInput((value) => value.length <= 2);
+  } = useInput(
+    (value) => value.length > 0 && value.length <= 2 && !isNaN(value)
+  );
 
   const {
     value: creditCardExpireYear,
@@ -141,7 +146,7 @@ const OrderForm = ({ cartContents, email, emptyShoppingCart }) => {
     valueChangeHandler: creditCardExpireYearChangeHandler,
     valueBlurHandler: creditCardExpireYearBlurHandler,
     reset: creditCardExpireYearReset,
-  } = useInput((value) => value.length === 4);
+  } = useInput((value) => value.length === 4 && !isNaN(value));
 
   const {
     value: creditCardCVV,
@@ -150,7 +155,16 @@ const OrderForm = ({ cartContents, email, emptyShoppingCart }) => {
     valueChangeHandler: creditCardCVVChangeHandler,
     valueBlurHandler: creditCardCVVBlurHandler,
     reset: creditCardCVVReset,
-  } = useInput((value) => value.length === 3);
+  } = useInput((value) => value.length === 3 && !isNaN(value));
+
+  const getValidationText = (inputIsTouched, inputIsValid) => {
+    return (
+      inputIsTouched &&
+      !inputIsValid && (
+        <span className={css['validation-text']}>*Invalid entry.</span>
+      )
+    );
+  };
 
   return (
     <form>
@@ -167,6 +181,7 @@ const OrderForm = ({ cartContents, email, emptyShoppingCart }) => {
           aria-describedby="firstNameHelp"
           placeholder="First Name"
         />
+        {getValidationText(firstNameIsTouched, firstNameIsValid)}
       </div>
 
       <div className={css['form-group']}>
@@ -182,6 +197,7 @@ const OrderForm = ({ cartContents, email, emptyShoppingCart }) => {
           aria-describedby="lastNameHelp"
           placeholder="Last Name"
         />
+        {getValidationText(lastNameIsTouched, lastNameIsValid)}
       </div>
 
       <div className={css['form-group']}>
@@ -197,6 +213,7 @@ const OrderForm = ({ cartContents, email, emptyShoppingCart }) => {
           aria-describedby="streetHelp"
           placeholder="Street"
         />
+        {getValidationText(streetIsTouched, streetIsValid)}
       </div>
 
       <div className={css['form-group']}>
@@ -212,22 +229,18 @@ const OrderForm = ({ cartContents, email, emptyShoppingCart }) => {
           aria-describedby="cityHelp"
           placeholder="City"
         />
+        {getValidationText(cityIsTouched, cityIsValid)}
       </div>
 
-      <div className={css['form-group']}>
-        <label htmlFor="state">State</label>
-        <input
-          type="text"
-          className={css['form-control']}
-          name="state"
-          id="state"
-          onChange={stateChangeHandler}
-          onBlur={stateBlurHandler}
-          value={state}
-          aria-describedby="stateHelp"
-          placeholder="State"
-        />
-      </div>
+      <InputUsStates
+        className={css['form-group']}
+        stateChangeHandler={stateChangeHandler}
+        stateBlurHandler={stateBlurHandler}
+        state={state}
+        getValidationText={getValidationText}
+        stateIsValid={stateIsValid}
+        stateIsTouched={stateIsTouched}
+      />
 
       <div className={css['form-group']}>
         <label htmlFor="zip-code">Zip Code</label>
@@ -242,10 +255,24 @@ const OrderForm = ({ cartContents, email, emptyShoppingCart }) => {
           aria-describedby="zipHelp"
           placeholder="Zip Code"
         />
+        {getValidationText(zipIsTouched, zipIsValid)}
       </div>
 
       <div className={css['form-group']}>
         <label htmlFor="credit-card-number">Credit Card Number</label>
+        {/* <input
+          name="credit-card-number"
+          id="credit-card-number"
+          type="text"
+          inputMode="numeric"
+          autoComplete="credit-card-number"
+          maxLength="19"
+          placeholder="xxxx xxxx xxxx xxxx"
+          onChange={creditCardChangeHandler}
+          onBlur={creditCardBlurHandler}
+          value={creditCard}
+          aria-describedby="creditCardHelp"
+        ></input> */}
         <input
           type="text"
           className={css['form-control']}
@@ -257,24 +284,18 @@ const OrderForm = ({ cartContents, email, emptyShoppingCart }) => {
           aria-describedby="creditCardHelp"
           placeholder="Credit Card Number"
         />
+        {getValidationText(creditCardIsTouched, creditCardIsValid)}
       </div>
 
-      <div className={css['form-group']}>
-        <label htmlFor="credit-card-expiration-month">
-          Credit Card Expiration Month
-        </label>
-        <input
-          type="text"
-          className={css['form-control']}
-          name="credit-card-expiration-month"
-          id="credit-card-expiration-month"
-          onChange={creditCardExpireMonthChangeHandler}
-          onBlur={creditCardExpireMonthBlurHandler}
-          value={creditCardExpireMonth}
-          aria-describedby="creditCardExpireMonthHelp"
-          placeholder="Month"
-        />
-      </div>
+      <InputMonth
+        className={css['form-group']}
+        creditCardExpireMonthChangeHandler={creditCardExpireMonthChangeHandler}
+        creditCardExpireMonthBlurHandler={creditCardExpireMonthBlurHandler}
+        creditCardExpireMonth={creditCardExpireMonth}
+        getValidationText={getValidationText}
+        creditCardExpireMonthIsValid={creditCardExpireMonthIsValid}
+        creditCardExpireMonthIsTouched={creditCardExpireMonthIsTouched}
+      />
 
       <div className={css['form-group']}>
         <label htmlFor="credit-card-expiration-year">
@@ -291,6 +312,10 @@ const OrderForm = ({ cartContents, email, emptyShoppingCart }) => {
           aria-describedby="creditCardExpireYearHelp"
           placeholder="Year"
         />
+        {getValidationText(
+          creditCardExpireYearIsTouched,
+          creditCardExpireYearIsValid
+        )}
       </div>
 
       <div className={css['form-group']}>
@@ -306,6 +331,7 @@ const OrderForm = ({ cartContents, email, emptyShoppingCart }) => {
           aria-describedby="creditCardCVVHelp"
           placeholder="CVV"
         />
+        {getValidationText(creditCardCVVIsTouched, creditCardCVVIsValid)}
       </div>
 
       <button onClick={handleSubmitOrder} className={css['btn']}>

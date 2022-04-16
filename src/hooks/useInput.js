@@ -7,6 +7,7 @@ const useInput = (checkValidity) => {
   const isValid = checkValidity(value);
 
   const valueChangeHandler = (event) => {
+    console.log(event.target.value);
     setValue(event.target.value);
   };
 
