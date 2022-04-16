@@ -1,4 +1,5 @@
 import React from 'react';
+import { centsToDollars } from '../../utils/money';
 import css from './Product.module.css';
 
 const Product = ({
@@ -25,8 +26,6 @@ const Product = ({
 
     onClickAddToCart(product);
   };
-
-  const centsToDollars = (num) => `$${(num / 100.0).toFixed(2)}`;
 
   return (
     <div className={css['product']}>

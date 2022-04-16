@@ -26,7 +26,7 @@ const Cart = ({
   );
 
   return (
-    <div>
+    <div className={css['cart']}>
       {cartContents.map((item) => (
         <CartProduct
           key={item.productID}

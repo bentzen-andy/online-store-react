@@ -11,6 +11,22 @@ const Header = ({ loginState, email, cart }) => {
           <Link to="/">Store</Link>
         </li>
 
+        <li>
+          <Link to="/seating">Seating</Link>
+        </li>
+
+        <li>
+          <Link to="/tables-and-desks">Desks &amp; Tables</Link>
+        </li>
+
+        <li>
+          <Link to="/lighting">Lighting</Link>
+        </li>
+
+        <li>
+          <Link to="/accessories">Accessories</Link>
+        </li>
+
         {loginState === 'NOT_LOGGED_IN' && (
           <li>
             <Link to="/sign-up">Sign Up</Link>
@@ -31,7 +47,7 @@ const Header = ({ loginState, email, cart }) => {
 
         {loginState === 'LOGGED_IN' && (
           <li>
-            <Link to="/cart">Cart</Link>
+            <Link to="/cart">Check Out</Link>
           </li>
         )}
 

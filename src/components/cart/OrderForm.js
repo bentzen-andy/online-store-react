@@ -166,6 +166,18 @@ const OrderForm = ({ cartContents, email, emptyShoppingCart }) => {
     );
   };
 
+  const allInputsValid =
+    firstNameIsValid &&
+    lastNameIsValid &&
+    streetIsValid &&
+    cityIsValid &&
+    stateIsValid &&
+    zipIsValid &&
+    creditCardIsValid &&
+    creditCardExpireMonthIsValid &&
+    creditCardExpireYearIsValid &&
+    creditCardCVVIsValid;
+
   return (
     <form>
       <div className={css['form-group']}>
@@ -260,19 +272,6 @@ const OrderForm = ({ cartContents, email, emptyShoppingCart }) => {
 
       <div className={css['form-group']}>
         <label htmlFor="credit-card-number">Credit Card Number</label>
-        {/* <input
-          name="credit-card-number"
-          id="credit-card-number"
-          type="text"
-          inputMode="numeric"
-          autoComplete="credit-card-number"
-          maxLength="19"
-          placeholder="xxxx xxxx xxxx xxxx"
-          onChange={creditCardChangeHandler}
-          onBlur={creditCardBlurHandler}
-          value={creditCard}
-          aria-describedby="creditCardHelp"
-        ></input> */}
         <input
           type="text"
           className={css['form-control']}
@@ -334,9 +333,16 @@ const OrderForm = ({ cartContents, email, emptyShoppingCart }) => {
         {getValidationText(creditCardCVVIsTouched, creditCardCVVIsValid)}
       </div>
 
-      <button onClick={handleSubmitOrder} className={css['btn']}>
-        Submit Order
-      </button>
+      {allInputsValid && (
+        <button onClick={handleSubmitOrder} className={css['btn']}>
+          Submit Order
+        </button>
+      )}
+      {!allInputsValid && (
+        <button onClick={handleSubmitOrder} className={css['btn']} disabled>
+          Submit Order
+        </button>
+      )}
     </form>
   );
 };
