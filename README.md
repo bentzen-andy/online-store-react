@@ -1,70 +1,124 @@
-# Getting Started with Create React App
+# Installation Instructions - Online Store
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+## Table of Contents
 
-## Available Scripts
+1. Pull down projects from Github.
+2. Test locally.
+3. Deploy front-end code.
+4. Deploy back-end API code.
 
-In the project directory, you can run:
+## 1. Pull Down Projects from Github.
 
-### `npm start`
+This project is comprised of a front-end project and a back-end API project which are stored separately in different git repositories. You will need to clone each project.
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+### Step 1a:
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+Create two project directories for this project:
 
-### `npm test`
+`mkdir ~/online-store-react`
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+`mkdir ~/online-store-nodejs`
 
-### `npm run build`
+### Step 1b:
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+Clone the front-end code from Github:
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+`cd ~/online-store-react`
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+`git clone https://github.com/bentzen-andy/online-store-react.git`
 
-### `npm run eject`
+### Step 1c:
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+Clone the back-end API code from Github:
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+`cd ~/online-store-nodejs`
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+`git clone https://github.com/bentzen-andy/online-store-nodejs.git`
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+## 2. Test the Project Locally.
 
-## Learn More
+If you do NOT want to test locally, and only want to deploy this project, feel free to skip this step and move on to step 3.
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+### Step 2a:
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+Navigate to the back-end API project:
 
-### Code Splitting
+`cd ~/online-store-nodejs`
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+Create a `.env` file at the project root. You will need to input the following lines of code:
 
-### Analyzing the Bundle Size
+`PORT=8080`
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+`MONGO_URI=<your-connection-string-here>` (This project is set up with MongoDB)
 
-### Making a Progressive Web App
+`TOKEN_KEY=<...>` Use a large random number (this is used for secure user authentication with JWT tokens).
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+`CORS_ORIGIN=http://localhost:3000`
 
-### Advanced Configuration
+`NODE_ENV=development`
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
+### Step 2b:
 
-### Deployment
+Start the server:
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
+`npm run dev`
 
-### `npm run build` fails to minify
+This will spin up the server on port 8080.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+### Step 2c:
+
+Next, navigate to the front-end project and start that server as well. You may need to change the of the API calls first.
+
+`cd ~/online-store-react`
+
+### Step 2d:
+
+Search for all the files in the project for the `fetch` function. You will need to comment out the `fetch` calls that call to `https://atb-online-store-api.herokuapp.com/...`, and uncomment the `fetch` calls for `http://localhost:8080/...`
+
+### Step 2e:
+
+Start the server:
+
+`npm start`
+
+This should start up server on port 3000. You will need to be on port 3000 for the website to work properly. If you are on a different port, stop the server and troubleshoot to see if anything else is currently running on this port and close it. You can also optionally update the CORS policy on the back-end API project.
+
+You should now see the homepage of the website running.
+
+## 3. Deploy Front-End Code
+
+### Step 3a:
+
+If you changed the `fetch` calls (per step 2d), you will need to change those back.
+
+### Step 3b:
+
+Choose your host and follow their deployment instructions. If you are deploying this to an Apache server you will need to refer to the documentation for `react-router-dom` to understand the `homepage` option in the `package.json` file.
+
+Depending on your host, you may need to build the project as well:
+
+`npm run build`
+
+This will create the `index.html` file along with all the static files in the `/build` directory of the project root.
+
+## 4. Deploy Back-End Code
+
+### Step 4a:
+
+Prep your environment variables for deployment. Open your `.env` file (found at the root of the project directory), and modify the following variables:
+
+`PORT=8080` (Remove this line if you are deploying to Heroku, otherwise, change this line to `PORT=443`)
+
+`CORS_ORIGIN=https://atb-online-store.herokuapp.com/`
+
+`NODE_ENV=production`
+
+### Step 4b:
+
+Choose your host and follow their deployment instructions. Once you have the project loaded on your server's machine, you can start it with the command:
+
+`npm start`
+
+or equivalently:
+
+`node app.js`
