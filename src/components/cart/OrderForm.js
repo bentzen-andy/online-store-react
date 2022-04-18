@@ -29,8 +29,8 @@ const OrderForm = ({ cartContents, email, emptyShoppingCart }) => {
     console.log('customerInfo');
     console.log(customerInfo);
 
-    fetch('http://localhost:8080/order', {
-      // fetch('https://atb-online-store-api.herokuapp.com/order', {
+    // fetch('http://localhost:8080/order', {
+    fetch('https://atb-online-store-api.herokuapp.com/order', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',

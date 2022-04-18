@@ -4,7 +4,7 @@ import css from './ProductLinks.module.css';
 
 const ProductLinks = ({ category, products }) => {
   return (
-    <div className={css['products']}>
+    <div className={css['product-links']}>
       {products.map((p) => (
         <ProductLink
           key={p._id}

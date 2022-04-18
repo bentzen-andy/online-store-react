@@ -1,4 +1,3 @@
-.product-img {
-  height: auto;
-  width: 16rem;
+.product-links {
+  display: flex;
 }

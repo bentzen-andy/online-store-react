@@ -8,7 +8,7 @@ const Header = ({ loginState, email, cart }) => {
     <header className={css['header']}>
       <ul>
         <li>
-          <Link to="/">Store</Link>
+          <Link to="/">ATB Online Store</Link>
         </li>
 
         <li>

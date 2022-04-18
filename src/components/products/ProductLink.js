@@ -4,12 +4,12 @@ import css from './ProductLink.module.css';
 
 const ProductLink = ({ name, slug, category, imageUrl }) => {
   return (
-    <span className={css['product-link']}>
+    <div className={css['product-link']}>
       <Link to={`/${category}/${slug}`}>
-        <img className={css['product-link-img']} src={imageUrl} alt={name} />
-        <div>{name}</div>
+        <img className={css['product-link__img']} src={imageUrl} alt={name} />
+        <div className={css['product-link__subtext']}>{name}</div>
       </Link>
-    </span>
+    </div>
   );
 };
 

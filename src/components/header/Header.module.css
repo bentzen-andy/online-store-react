@@ -1,3 +1,11 @@
+.header {
+  background-color: #222;
+}
+
+.header a {
+  font-size: 1.2rem;
+}
+
 .header ul {
   display: flex;
   margin: 0;
@@ -6,6 +14,7 @@
 
 .header li {
   list-style: none;
-  margin: 1rem 2rem;
+  /* margin: auto; */
   padding: 0;
+  margin: 1.5rem auto;
 }

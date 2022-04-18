@@ -1,4 +1,12 @@
-.product-img {
+.product {
+  display: flex;
+}
+
+.product__img {
   height: auto;
-  width: 16rem;
+  width: 40rem;
+}
+
+.product__description {
+  margin: 2rem;
 }

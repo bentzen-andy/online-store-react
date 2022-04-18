@@ -1,0 +1,16 @@
+.cart-icon {
+  color: white;
+  color: #6a7271;
+  font-size: 1.2rem;
+}
+
+.cart-icon a {
+  color: #01807e;
+  font-size: 3rem;
+}
+
+.cart-icon svg {
+  color: #01807e;
+  width: 3rem;
+  height: 3rem;
+}

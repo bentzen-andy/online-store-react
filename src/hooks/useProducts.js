@@ -5,8 +5,8 @@ const useProducts = () => {
   const [productCategories, setProductCategories] = useState({});
 
   useEffect(() => {
-    fetch('http://localhost:8080/products', {
-      // fetch('https://atb-online-store-api.herokuapp.com/products', {
+    // fetch('http://localhost:8080/products', {
+    fetch('https://atb-online-store-api.herokuapp.com/products', {
       headers: {
         Accept: 'application/json',
       },

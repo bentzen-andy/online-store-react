@@ -1,4 +1,6 @@
 import React from 'react';
+import { FaShoppingCart } from 'react-icons/fa';
+
 import { Link } from 'react-router-dom';
 import css from './CartIcon.module.css';
 
@@ -14,7 +16,9 @@ const CartIcon = ({ loginState, email, cart }) => {
     <div className={css['cart-icon']}>
       {userText}
       {loginState === 'LOGGED_IN' && (
-        <Link to="/cart">({getCartQuantity()})</Link>
+        <Link to="/cart">
+          <FaShoppingCart />({getCartQuantity()})
+        </Link>
       )}
     </div>
   );

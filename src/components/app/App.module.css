@@ -1,3 +1,9 @@
 .app {
-  text-align: left;
+  display: grid;
+  grid-template-rows: 5rem auto 10rem;
+  grid-template-areas:
+    'header'
+    'main'
+    'footer';
+  height: 100vh;
 }

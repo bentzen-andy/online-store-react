@@ -29,13 +29,15 @@ const Product = ({
 
   return (
     <div className={css['product']}>
-      <img className={css['product-img']} src={imageUrl} alt={name} />
-      <div>{name}</div>
-      <div>{description}</div>
-      <div>{centsToDollars(price)}</div>
-      <div>{category}</div>
-      <div>{numberInStock}</div>
-      <button onClick={handleAddToCart}>Add to Cart</button>
+      <img className={css['product__img']} src={imageUrl} alt={name} />
+      <div className={css['product__description']}>
+        <div>{name}</div>
+        <div>{description}</div>
+        <div>{centsToDollars(price)}</div>
+        <div>{category}</div>
+        <div>{numberInStock}</div>
+        <button onClick={handleAddToCart}>Add to Cart</button>
+      </div>
     </div>
   );
 };

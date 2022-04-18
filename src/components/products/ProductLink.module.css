@@ -1,4 +1,12 @@
-.product-link-img {
+.product-link {
+  margin: 3rem 1rem;
+}
+
+.product-link__img {
   height: auto;
-  width: 16rem;
+  width: 20rem;
+}
+
+.product-link__subtext {
+  font-size: 1.3rem;
 }
