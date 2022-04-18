@@ -85,17 +85,25 @@ const App = () => {
           {/* ------------------------------- */}
           {/* Routes for Checkout Process     */}
           {/* ------------------------------- */}
-          <Route
-            path="/cart"
-            element={
-              <Cart
-                cartContents={cart}
-                email={email}
-                emptyShoppingCart={emptyShoppingCart}
-                changeProductQuantity={changeProductQuantity}
-              />
-            }
-          />
+          {loginState === 'NOT_LOGGED_IN' && (
+            <Route
+              path="/cart"
+              element={<div>Please sign in to view your cart.</div>}
+            />
+          )}
+          {loginState === 'LOGGED_IN' && (
+            <Route
+              path="/cart"
+              element={
+                <Cart
+                  cartContents={cart}
+                  email={email}
+                  emptyShoppingCart={emptyShoppingCart}
+                  changeProductQuantity={changeProductQuantity}
+                />
+              }
+            />
+          )}
           <Route path="/order-confirmation" element={<OrderConfirmation />} />
 
           {/* ------------------------------- */}

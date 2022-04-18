@@ -13,7 +13,9 @@ const OrderForm = ({ cartContents, email, emptyShoppingCart }) => {
     console.log('submitting order now... ');
     const products = cartContents;
     const customerInfo = {};
-    customerInfo.email = email;
+
+    customerInfo.email = email; // TODO change this so that it pulls 'email' from the server not from state variable. or maybe instead, I'll send the JWT to the server and let the sever decide whether the email matches.
+
     customerInfo.firstName = firstName;
     customerInfo.lastName = lastName;
     customerInfo.street = street;

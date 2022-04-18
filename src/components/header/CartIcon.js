@@ -15,11 +15,11 @@ const CartIcon = ({ loginState, email, cart }) => {
   return (
     <div className={css['cart-icon']}>
       {userText}
-      {loginState === 'LOGGED_IN' && (
-        <Link to="/cart">
-          <FaShoppingCart />({getCartQuantity()})
-        </Link>
-      )}
+      {/* {loginState === 'LOGGED_IN' && ( */}
+      <Link to="/cart">
+        <FaShoppingCart />({getCartQuantity()})
+      </Link>
+      {/* )} */}
     </div>
   );
 };
