@@ -9,7 +9,6 @@ const CartProduct = ({
   changeProductQuantity,
 }) => {
   const handleQuantityChange = (event) => {
-    console.log(event.target.id);
     const changeType = event.target.id;
     let quantityChange = 0;
     if (changeType === 'increment') quantityChange = 1;

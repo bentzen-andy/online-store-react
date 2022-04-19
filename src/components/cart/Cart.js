@@ -12,11 +12,6 @@ const Cart = ({
 }) => {
   const [orderFromIsVisible, setOrderFromIsVisible] = useState(false);
 
-  console.log('Cart - email');
-  console.log(email);
-  console.log('Cart - cartContents');
-  console.log(cartContents);
-
   const showOrderForm = () => {
     setOrderFromIsVisible(true);
   };

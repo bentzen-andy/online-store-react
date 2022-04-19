@@ -24,9 +24,6 @@ const useCart = () => {
   };
 
   const changeProductQuantity = (productID, quantityChange) => {
-    console.log('App - changeProductQuantity');
-    console.log(productID);
-    console.log(quantityChange);
     setCart((contents) => {
       let cart = [...contents];
 

@@ -11,7 +11,6 @@ const useCredentials = () => {
   const [validationText, setValidationText] = useState(null);
 
   const handleSuccessfulAuth = (token) => {
-    console.log('you are logged in!');
     // create a cookie to store the user's encrypted login credentials
     setCookie('accessToken', token, 1);
     setLoginState('LOGGED_IN');
@@ -19,7 +18,6 @@ const useCredentials = () => {
     navigate('/');
   };
   const handleUnsuccessfulAuth = (response) => {
-    console.log('something went wrong...');
     setValidationText(response.error);
   };
 
@@ -38,9 +36,6 @@ const useCredentials = () => {
     })
       .then((response) => response.json())
       .then((response) => {
-        console.log('checkCredentials');
-        console.log('response');
-        console.log(response);
         if (response.status === 'LOGGED_IN') {
           setLoginState('LOGGED_IN');
           setEmail(response.email);
@@ -48,8 +43,7 @@ const useCredentials = () => {
           setLoginState('NOT_LOGGED_IN');
           setEmail('');
         }
-      })
-      .catch((err) => console.error(err));
+      });
   };
 
   const logOff = () => {
@@ -77,13 +71,10 @@ const useCredentials = () => {
     })
       .then((response) => response.json())
       .then((response) => {
-        console.log('response');
-        console.log(response);
         if (response.status === 'LOGGED_IN')
           handleSuccessfulAuth(response.token);
         else handleUnsuccessfulAuth(response);
-      })
-      .catch((err) => console.error(err));
+      });
   };
 
   const registerUser = (email, password, passwordConfirmation) => {
@@ -104,12 +95,9 @@ const useCredentials = () => {
     })
       .then((response) => response.json())
       .then((response) => {
-        console.log('response');
-        console.log(response);
         if (response.status === 'created') handleSuccessfulAuth(response.token);
         else handleUnsuccessfulAuth(response);
-      })
-      .catch((err) => console.error(err));
+      });
   };
 
   const resetValidationText = () => setValidationText(null);

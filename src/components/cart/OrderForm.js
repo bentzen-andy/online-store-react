@@ -12,8 +12,6 @@ const OrderForm = ({ cartContents, email, emptyShoppingCart }) => {
   const { getCookie } = useCookie();
 
   const handleSubmitOrder = () => {
-    console.log('submitting order now... ');
-
     const accessToken = getCookie('accessToken');
     const products = cartContents;
     const customerInfo = {};
@@ -30,12 +28,6 @@ const OrderForm = ({ cartContents, email, emptyShoppingCart }) => {
     customerInfo.creditCardExpireMonth = creditCardExpireMonth;
     customerInfo.creditCardExpireYear = creditCardExpireYear;
     customerInfo.creditCardCVV = creditCardCVV;
-    console.log('accessToken');
-    console.log(accessToken);
-    console.log('products');
-    console.log(products);
-    console.log('customerInfo');
-    console.log(customerInfo);
 
     fetch('http://localhost:8080/order', {
       // fetch('https://atb-online-store-api.herokuapp.com/order', {
@@ -57,10 +49,7 @@ const OrderForm = ({ cartContents, email, emptyShoppingCart }) => {
       .then((response) => {
         navigate('/order-confirmation');
         emptyShoppingCart();
-        console.log('Order Form - response');
-        console.log(response);
-      })
-      .catch((err) => console.log(err));
+      });
 
     firstNameReset();
     lastNameReset();

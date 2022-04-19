@@ -21,7 +21,6 @@ const App = () => {
     useCart();
 
   useEffect(() => {
-    console.log('App is now rendering');
     checkCredentials();
   }, [checkCredentials]);
 

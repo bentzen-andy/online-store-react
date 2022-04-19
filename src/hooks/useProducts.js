@@ -12,8 +12,7 @@ const useProducts = () => {
       },
     })
       .then((response) => response.json())
-      .then((data) => setProducts(data.products))
-      .catch((err) => console.log(err));
+      .then((data) => setProducts(data.products));
   }, []);
 
   useEffect(() => {
@@ -26,8 +25,6 @@ const useProducts = () => {
       return null;
     });
     setProductCategories(productCategories);
-    console.log('productCategories');
-    console.log(productCategories);
   }, [products]);
 
   return {
