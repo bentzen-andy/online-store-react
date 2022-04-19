@@ -1,5 +1,14 @@
 import { useState } from 'react';
 
+/*
+ * Andy Bentzen
+ * 4/19/2022
+ * Hooks contain all of the complex business logic for the application. These hooks
+ * expose state variable and functions that act on those variables (similar to OOP style).
+ *
+ * This hook allows users to add/edit items in the shopping cart.
+ */
+
 const useCart = () => {
   const [cart, setCart] = useState([]);
 

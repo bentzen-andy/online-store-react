@@ -4,6 +4,16 @@ import OrderForm from './OrderForm';
 import { centsToDollars } from '../../utils/money';
 import css from './Cart.module.css';
 
+/*
+ * Andy Bentzen
+ * 4/19/2022
+ * The Cart component serves two purposes:
+ *    1. It displays the contents of the shopping cart and allows customers
+ *       to edit the cart before placing an order.
+ *    2. It displays and handles an order for that posts to the sever when
+ *       the customer is all done.
+ */
+
 const Cart = ({
   cartContents,
   email,

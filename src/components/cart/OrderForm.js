@@ -7,6 +7,14 @@ import css from './OrderForm.module.css';
 import { validateCreditCard } from '../../utils/validations';
 import useCookie from '../../hooks/useCookie';
 
+/*
+ * Andy Bentzen
+ * 4/19/2022
+ * The OrderForm is in charge of rendering the order form, conducting client-side
+ * validations on the inputs, and sending the orders up the server to be processed.
+ * This is a very long, but conceptually simple component.
+ */
+
 const OrderForm = ({ cartContents, email, emptyShoppingCart }) => {
   const navigate = useNavigate();
   const { getCookie } = useCookie();

@@ -2,6 +2,17 @@ import React, { useState, useEffect } from 'react';
 import useCredentials from '../../hooks/useCredentials';
 import css from './Registration.module.css';
 
+/*
+ * Andy Bentzen
+ * 4/19/2022
+ * The Registration component renders the login/sign up forms and handles communications
+ * with the server to authenticate the user. This component uses the same form for the
+ * login and the signup pages, (the only difference is that it conditionally renders the
+ * password confirmation input at the bottom). The business logic that specifically handles
+ * authentication is located in the "/src/hooks" directory.
+ *
+ */
+
 const Registration = ({ registrationType, emptyShoppingCart }) => {
   const { validationText, logOff, logIn, registerUser, resetValidationText } =
     useCredentials();

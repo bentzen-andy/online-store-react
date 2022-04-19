@@ -1,6 +1,13 @@
 import React from 'react';
 import { centsToDollars } from '../../utils/money';
 
+/*
+ * Andy Bentzen
+ * 4/19/2022
+ * The CartProduct components is just an easy way to manage and display the line
+ * items that exist in the cart.
+ */
+
 const CartProduct = ({
   name,
   quantity,

@@ -2,6 +2,13 @@ import React from 'react';
 import { centsToDollars } from '../../utils/money';
 import css from './Product.module.css';
 
+/*
+ * Andy Bentzen
+ * 4/19/2022
+ * The Product component is a product detail page. It is intended to give the customer
+ * in-depth details on the product and give them a chance to add the product to the cart.
+ */
+
 const Product = ({
   name,
   description,
@@ -34,8 +41,7 @@ const Product = ({
         <div>{name}</div>
         <div>{description}</div>
         <div>{centsToDollars(price)}</div>
-        <div>{category}</div>
-        <div>{numberInStock}</div>
+        <div>Product Type: {category}</div>
         <button onClick={handleAddToCart}>Add to Cart</button>
       </div>
     </div>

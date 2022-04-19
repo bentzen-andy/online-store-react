@@ -1,25 +1,56 @@
 import React, { useEffect } from 'react';
 import { Routes, Route } from 'react-router-dom';
-import Home from '../home/Home';
+
+// Components
 import Header from '../header/Header';
-import ProductLinks from '../products/ProductLinks';
+import Home from '../home/Home';
 import Cart from '../cart/Cart';
-import css from './App.module.css';
 import Registration from '../auth/Registration';
-import useCredentials from '../../hooks/useCredentials';
-import useCart from '../../hooks/useCart';
 import OrderConfirmation from '../cart/OrderConfirmation';
+import ProductLinks from '../products/ProductLinks';
 import Product from '../products/Product';
-import useProducts from '../../hooks/useProducts';
 import Footer from '../footer/Footer';
 import PageNotFound from '../page-not-found/PageNotFound';
 
+// Hooks
+import useCredentials from '../../hooks/useCredentials';
+import useProducts from '../../hooks/useProducts';
+import useCart from '../../hooks/useCart';
+
+// Styles
+import css from './App.module.css';
+
+/*
+ * Andy Bentzen
+ * 4/19/2022
+ * The App component served two main functions:
+ *   1. Managing state for essentially the entire application.
+ *   2. Managing client-side routing, to conditionally render components based
+ *      on the URL.
+ * First products are pulled from the REST API server and displayed in the product
+ * category pages.
+ * Next, it creates a shopping cart state variable (along with setter functions) to
+ * keep track of what the user puts in the shopping cart.
+ * Next App uses a useEffect call which fires every time the App component renders.
+ * This sends the "accessToken" to the server to verify whether the credentials are valid.
+ * The business logic that handles everything just described in extracted out to the "/src/hooks"
+ * directory.
+ *
+ */
+
 const App = () => {
+  // Use React state variable to track whether the user is logged in.
   const { loginState, email, checkCredentials } = useCredentials();
+
+  // Pull all the store's products down from the server.
   const { products, productCategories } = useProducts();
+
+  // Get a list of functions to handel the shopping cart as a React state variable
   const { cart, addProductToCart, changeProductQuantity, emptyShoppingCart } =
     useCart();
 
+  // Check against the server if the user is currently logged in. Logged in users
+  /// will have a unique JWT token as a value of their "accessToken" cookie.
   useEffect(() => {
     checkCredentials();
   }, [checkCredentials]);

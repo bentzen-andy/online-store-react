@@ -2,7 +2,21 @@ import { useState } from 'react';
 import useCookie from './useCookie';
 import { useNavigate } from 'react-router-dom';
 
-// main function of functions (returns all functions in an object)
+/*
+ * Andy Bentzen
+ * 4/19/2022
+ * Hooks contain all of the complex business logic for the application. These hooks
+ * expose state variable and functions that act on those variables (similar to OOP style).
+ *
+ * This hook is the business logic for the Registration component. This is basically a
+ * list of functions that handle communications with the server for auth purposes. These
+ * functions also handle responses back to the client and tell it what to do next. For
+ * instance, if a user tries to register with an email that is already taken, the
+ * server will complain and send an error message. This hook will store that validation
+ * message and hand it over the the Registration component to be rendered to the user.
+ * This hook might also redirect the URL if necessary.
+ */
+
 const useCredentials = () => {
   const navigate = useNavigate();
   const { getCookie, setCookie, deleteCookie } = useCookie();

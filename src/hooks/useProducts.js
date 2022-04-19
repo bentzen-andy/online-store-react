@@ -1,5 +1,16 @@
 import { useEffect, useState } from 'react';
 
+/*
+ * Andy Bentzen
+ * 4/19/2022
+ * Hooks contain all of the complex business logic for the application. These hooks
+ * expose state variable and functions that act on those variables (similar to OOP style).
+ *
+ * This hook gathers the products from the server and then collates the products into their
+ * product categories. This makes it easier for the App component to map through the categories
+ * and create the routes.
+ */
+
 const useProducts = () => {
   const [products, setProducts] = useState([]);
   const [productCategories, setProductCategories] = useState({});

@@ -1,6 +1,13 @@
 import React from 'react';
 import css from './InputMonth.module.css';
 
+/*
+ * Andy Bentzen
+ * 4/19/2022
+ * The InputMonth component is rendered by the OrderForm component. It simply gives
+ * a convenient dropdown.
+ */
+
 const InputMonth = ({
   creditCardExpireMonthChangeHandler,
   creditCardExpireMonthBlurHandler,
