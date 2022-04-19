@@ -5,12 +5,16 @@ import InputMonth from './InputMonth';
 import { useNavigate } from 'react-router-dom';
 import css from './OrderForm.module.css';
 import { validateCreditCard } from '../../utils/validations';
+import useCookie from '../../hooks/useCookie';
 
 const OrderForm = ({ cartContents, email, emptyShoppingCart }) => {
   const navigate = useNavigate();
+  const { getCookie } = useCookie();
 
   const handleSubmitOrder = () => {
     console.log('submitting order now... ');
+
+    const accessToken = getCookie('accessToken');
     const products = cartContents;
     const customerInfo = {};
 
@@ -26,13 +30,15 @@ const OrderForm = ({ cartContents, email, emptyShoppingCart }) => {
     customerInfo.creditCardExpireMonth = creditCardExpireMonth;
     customerInfo.creditCardExpireYear = creditCardExpireYear;
     customerInfo.creditCardCVV = creditCardCVV;
-    console.log('cartContents');
-    console.log(cartContents);
+    console.log('accessToken');
+    console.log(accessToken);
+    console.log('products');
+    console.log(products);
     console.log('customerInfo');
     console.log(customerInfo);
 
-    // fetch('http://localhost:8080/order', {
-    fetch('https://atb-online-store-api.herokuapp.com/order', {
+    fetch('http://localhost:8080/order', {
+      // fetch('https://atb-online-store-api.herokuapp.com/order', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -40,6 +46,7 @@ const OrderForm = ({ cartContents, email, emptyShoppingCart }) => {
         withCredentials: true,
       },
       body: JSON.stringify({
+        accessToken,
         order: {
           products,
           customerInfo,
@@ -48,12 +55,12 @@ const OrderForm = ({ cartContents, email, emptyShoppingCart }) => {
     })
       .then((response) => response.json())
       .then((response) => {
-        console.log('response');
-        console.log(response);
-        emptyShoppingCart();
         navigate('/order-confirmation');
+        emptyShoppingCart();
+        console.log('Order Form - response');
+        console.log(response);
       })
-      .catch((err) => console.error(err));
+      .catch((err) => console.log(err));
 
     firstNameReset();
     lastNameReset();
@@ -181,159 +188,163 @@ const OrderForm = ({ cartContents, email, emptyShoppingCart }) => {
     creditCardCVVIsValid;
 
   return (
-    <form>
-      <div className={css['form-group']}>
-        <label htmlFor="first-name">First Name</label>
-        <input
-          type="text"
-          className={css['form-control']}
-          name="first-name"
-          id="first-name"
-          onChange={firstNameChangeHandler}
-          onBlur={firstNameBlurHandler}
-          value={firstName}
-          aria-describedby="firstNameHelp"
-          placeholder="First Name"
+    <React.Fragment>
+      <form>
+        <div className={css['form-group']}>
+          <label htmlFor="first-name">First Name</label>
+          <input
+            type="text"
+            className={css['form-control']}
+            name="first-name"
+            id="first-name"
+            onChange={firstNameChangeHandler}
+            onBlur={firstNameBlurHandler}
+            value={firstName}
+            aria-describedby="firstNameHelp"
+            placeholder="First Name"
+          />
+          {getValidationText(firstNameIsTouched, firstNameIsValid)}
+        </div>
+
+        <div className={css['form-group']}>
+          <label htmlFor="last-name">Last Name</label>
+          <input
+            type="text"
+            className={css['form-control']}
+            name="last-name"
+            id="last-name"
+            onChange={lastNameChangeHandler}
+            onBlur={lastNameBlurHandler}
+            value={lastName}
+            aria-describedby="lastNameHelp"
+            placeholder="Last Name"
+          />
+          {getValidationText(lastNameIsTouched, lastNameIsValid)}
+        </div>
+
+        <div className={css['form-group']}>
+          <label htmlFor="street">Street</label>
+          <input
+            type="text"
+            className={css['form-control']}
+            name="street"
+            id="street"
+            onChange={streetChangeHandler}
+            onBlur={streetBlurHandler}
+            value={street}
+            aria-describedby="streetHelp"
+            placeholder="Street"
+          />
+          {getValidationText(streetIsTouched, streetIsValid)}
+        </div>
+
+        <div className={css['form-group']}>
+          <label htmlFor="city">City</label>
+          <input
+            type="text"
+            className={css['form-control']}
+            name="city"
+            id="city"
+            onChange={cityChangeHandler}
+            onBlur={cityBlurHandler}
+            value={city}
+            aria-describedby="cityHelp"
+            placeholder="City"
+          />
+          {getValidationText(cityIsTouched, cityIsValid)}
+        </div>
+
+        <InputUsStates
+          className={css['form-group']}
+          stateChangeHandler={stateChangeHandler}
+          stateBlurHandler={stateBlurHandler}
+          state={state}
+          getValidationText={getValidationText}
+          stateIsValid={stateIsValid}
+          stateIsTouched={stateIsTouched}
         />
-        {getValidationText(firstNameIsTouched, firstNameIsValid)}
-      </div>
 
-      <div className={css['form-group']}>
-        <label htmlFor="last-name">Last Name</label>
-        <input
-          type="text"
-          className={css['form-control']}
-          name="last-name"
-          id="last-name"
-          onChange={lastNameChangeHandler}
-          onBlur={lastNameBlurHandler}
-          value={lastName}
-          aria-describedby="lastNameHelp"
-          placeholder="Last Name"
+        <div className={css['form-group']}>
+          <label htmlFor="zip-code">Zip Code</label>
+          <input
+            type="text"
+            className={css['form-control']}
+            name="zip-code"
+            id="zip-code"
+            onChange={zipChangeHandler}
+            onBlur={zipBlurHandler}
+            value={zip}
+            aria-describedby="zipHelp"
+            placeholder="Zip Code"
+          />
+          {getValidationText(zipIsTouched, zipIsValid)}
+        </div>
+
+        <div className={css['form-group']}>
+          <label htmlFor="credit-card-number">Credit Card Number</label>
+          <input
+            type="text"
+            className={css['form-control']}
+            name="credit-card-number"
+            id="credit-card-number"
+            onChange={creditCardChangeHandler}
+            onBlur={creditCardBlurHandler}
+            value={creditCard}
+            aria-describedby="creditCardHelp"
+            placeholder="Credit Card Number"
+          />
+          {getValidationText(creditCardIsTouched, creditCardIsValid)}
+        </div>
+
+        <InputMonth
+          className={css['form-group']}
+          creditCardExpireMonthChangeHandler={
+            creditCardExpireMonthChangeHandler
+          }
+          creditCardExpireMonthBlurHandler={creditCardExpireMonthBlurHandler}
+          creditCardExpireMonth={creditCardExpireMonth}
+          getValidationText={getValidationText}
+          creditCardExpireMonthIsValid={creditCardExpireMonthIsValid}
+          creditCardExpireMonthIsTouched={creditCardExpireMonthIsTouched}
         />
-        {getValidationText(lastNameIsTouched, lastNameIsValid)}
-      </div>
 
-      <div className={css['form-group']}>
-        <label htmlFor="street">Street</label>
-        <input
-          type="text"
-          className={css['form-control']}
-          name="street"
-          id="street"
-          onChange={streetChangeHandler}
-          onBlur={streetBlurHandler}
-          value={street}
-          aria-describedby="streetHelp"
-          placeholder="Street"
-        />
-        {getValidationText(streetIsTouched, streetIsValid)}
-      </div>
+        <div className={css['form-group']}>
+          <label htmlFor="credit-card-expiration-year">
+            Credit Card Expiration Year
+          </label>
+          <input
+            type="text"
+            className={css['form-control']}
+            name="credit-card-expiration-year"
+            id="credit-card-expiration-year"
+            onChange={creditCardExpireYearChangeHandler}
+            onBlur={creditCardExpireYearBlurHandler}
+            value={creditCardExpireYear}
+            aria-describedby="creditCardExpireYearHelp"
+            placeholder="Year"
+          />
+          {getValidationText(
+            creditCardExpireYearIsTouched,
+            creditCardExpireYearIsValid
+          )}
+        </div>
 
-      <div className={css['form-group']}>
-        <label htmlFor="city">City</label>
-        <input
-          type="text"
-          className={css['form-control']}
-          name="city"
-          id="city"
-          onChange={cityChangeHandler}
-          onBlur={cityBlurHandler}
-          value={city}
-          aria-describedby="cityHelp"
-          placeholder="City"
-        />
-        {getValidationText(cityIsTouched, cityIsValid)}
-      </div>
-
-      <InputUsStates
-        className={css['form-group']}
-        stateChangeHandler={stateChangeHandler}
-        stateBlurHandler={stateBlurHandler}
-        state={state}
-        getValidationText={getValidationText}
-        stateIsValid={stateIsValid}
-        stateIsTouched={stateIsTouched}
-      />
-
-      <div className={css['form-group']}>
-        <label htmlFor="zip-code">Zip Code</label>
-        <input
-          type="text"
-          className={css['form-control']}
-          name="zip-code"
-          id="zip-code"
-          onChange={zipChangeHandler}
-          onBlur={zipBlurHandler}
-          value={zip}
-          aria-describedby="zipHelp"
-          placeholder="Zip Code"
-        />
-        {getValidationText(zipIsTouched, zipIsValid)}
-      </div>
-
-      <div className={css['form-group']}>
-        <label htmlFor="credit-card-number">Credit Card Number</label>
-        <input
-          type="text"
-          className={css['form-control']}
-          name="credit-card-number"
-          id="credit-card-number"
-          onChange={creditCardChangeHandler}
-          onBlur={creditCardBlurHandler}
-          value={creditCard}
-          aria-describedby="creditCardHelp"
-          placeholder="Credit Card Number"
-        />
-        {getValidationText(creditCardIsTouched, creditCardIsValid)}
-      </div>
-
-      <InputMonth
-        className={css['form-group']}
-        creditCardExpireMonthChangeHandler={creditCardExpireMonthChangeHandler}
-        creditCardExpireMonthBlurHandler={creditCardExpireMonthBlurHandler}
-        creditCardExpireMonth={creditCardExpireMonth}
-        getValidationText={getValidationText}
-        creditCardExpireMonthIsValid={creditCardExpireMonthIsValid}
-        creditCardExpireMonthIsTouched={creditCardExpireMonthIsTouched}
-      />
-
-      <div className={css['form-group']}>
-        <label htmlFor="credit-card-expiration-year">
-          Credit Card Expiration Year
-        </label>
-        <input
-          type="text"
-          className={css['form-control']}
-          name="credit-card-expiration-year"
-          id="credit-card-expiration-year"
-          onChange={creditCardExpireYearChangeHandler}
-          onBlur={creditCardExpireYearBlurHandler}
-          value={creditCardExpireYear}
-          aria-describedby="creditCardExpireYearHelp"
-          placeholder="Year"
-        />
-        {getValidationText(
-          creditCardExpireYearIsTouched,
-          creditCardExpireYearIsValid
-        )}
-      </div>
-
-      <div className={css['form-group']}>
-        <label htmlFor="credit-card-cvv">Credit Card CVV Code</label>
-        <input
-          type="text"
-          className={css['form-control']}
-          name="credit-card-cvv"
-          id="credit-card-cvv"
-          onChange={creditCardCVVChangeHandler}
-          onBlur={creditCardCVVBlurHandler}
-          value={creditCardCVV}
-          aria-describedby="creditCardCVVHelp"
-          placeholder="CVV"
-        />
-        {getValidationText(creditCardCVVIsTouched, creditCardCVVIsValid)}
-      </div>
+        <div className={css['form-group']}>
+          <label htmlFor="credit-card-cvv">Credit Card CVV Code</label>
+          <input
+            type="text"
+            className={css['form-control']}
+            name="credit-card-cvv"
+            id="credit-card-cvv"
+            onChange={creditCardCVVChangeHandler}
+            onBlur={creditCardCVVBlurHandler}
+            value={creditCardCVV}
+            aria-describedby="creditCardCVVHelp"
+            placeholder="CVV"
+          />
+          {getValidationText(creditCardCVVIsTouched, creditCardCVVIsValid)}
+        </div>
+      </form>
 
       {allInputsValid && (
         <button onClick={handleSubmitOrder} className={css['btn']}>
@@ -345,7 +356,7 @@ const OrderForm = ({ cartContents, email, emptyShoppingCart }) => {
           Submit Order
         </button>
       )}
-    </form>
+    </React.Fragment>
   );
 };
 

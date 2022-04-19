@@ -12,6 +12,7 @@ import OrderConfirmation from '../cart/OrderConfirmation';
 import Product from '../products/Product';
 import useProducts from '../../hooks/useProducts';
 import Footer from '../footer/Footer';
+import PageNotFound from '../page-not-found/PageNotFound';
 
 const App = () => {
   const { loginState, email, checkCredentials } = useCredentials();
@@ -20,7 +21,7 @@ const App = () => {
     useCart();
 
   useEffect(() => {
-    console.log('App is rendering');
+    console.log('App is now rendering');
     checkCredentials();
   }, [checkCredentials]);
 
@@ -29,7 +30,7 @@ const App = () => {
       <Header loginState={loginState} email={email} cart={cart} />
       <main>
         <Routes>
-          <Route path="/" element={<Home />} />
+          <Route path="/" exact element={<Home />} />
 
           {/* ------------------------------------ */}
           {/* Routes for Product Category Pages    */}
@@ -40,6 +41,7 @@ const App = () => {
               <Route
                 key={category}
                 path={`/${category}`}
+                exact
                 element={
                   <ProductLinks
                     key={category}
@@ -64,6 +66,7 @@ const App = () => {
               return (
                 <Route
                   path={`/${category}/${productName}`}
+                  exact
                   element={
                     <Product
                       key={p._id}
@@ -88,12 +91,14 @@ const App = () => {
           {loginState === 'NOT_LOGGED_IN' && (
             <Route
               path="/cart"
+              exact
               element={<div>Please sign in to view your cart.</div>}
             />
           )}
           {loginState === 'LOGGED_IN' && (
             <Route
               path="/cart"
+              exact
               element={
                 <Cart
                   cartContents={cart}
@@ -104,21 +109,28 @@ const App = () => {
               }
             />
           )}
-          <Route path="/order-confirmation" element={<OrderConfirmation />} />
+          <Route
+            path="/order-confirmation"
+            exact
+            element={<OrderConfirmation />}
+          />
 
           {/* ------------------------------- */}
           {/* Routes for Registration         */}
           {/* ------------------------------- */}
           <Route
             path="/sign-up"
+            exact
             element={<Registration registrationType="SIGN_UP" />}
           />
           <Route
             path="/log-in"
+            exact
             element={<Registration registrationType="LOG_IN" />}
           />
           <Route
             path="/log-out"
+            exact
             element={
               <Registration
                 registrationType="LOG_OUT"
@@ -126,6 +138,7 @@ const App = () => {
               />
             }
           />
+          <Route path="*" element={<PageNotFound />}></Route>
         </Routes>
       </main>
       <Footer />
