@@ -54,7 +54,7 @@ const FeatureIcons = () => {
         </div>
       </Link>
 
-      <Link to="/seating">
+      <Link to="/tables-and-desks">
         <div className={css['featured-icons__icon-content']}>
           <div className={css['featured-icons__icon-image']}>
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240.07 240.07">
@@ -96,7 +96,7 @@ const FeatureIcons = () => {
         </div>
       </Link>
 
-      <Link to="/seating">
+      <Link to="/lighting">
         <div className={css['featured-icons__icon-content']}>
           <div className={css['featured-icons__icon-image']}>
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240.07 240.07">
@@ -158,7 +158,7 @@ const FeatureIcons = () => {
         </div>
       </Link>
 
-      <Link to="/seating">
+      <Link to="/accessories">
         <div className={css['featured-icons__icon-content']}>
           <div className={css['featured-icons__icon-image']}>
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 152.1 152.1">
