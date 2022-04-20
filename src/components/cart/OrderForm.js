@@ -37,8 +37,8 @@ const OrderForm = ({ cartContents, email, emptyShoppingCart }) => {
     customerInfo.creditCardExpireYear = creditCardExpireYear;
     customerInfo.creditCardCVV = creditCardCVV;
 
-    fetch('http://localhost:8080/order', {
-      // fetch('https://atb-online-store-api.herokuapp.com/order', {
+    // fetch('http://localhost:8080/order', {
+    fetch('https://atb-online-store-api.herokuapp.com/order', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
