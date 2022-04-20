@@ -17,8 +17,7 @@ const InputUsStates = ({
   stateIsValid,
 }) => {
   return (
-    <div className={css['form-control']}>
-      State:
+    <React.Fragment>
       <select
         name="state"
         id="state"
@@ -81,7 +80,7 @@ const InputUsStates = ({
         <option value="WY">Wyoming</option>
       </select>
       {getValidationText(stateIsTouched, stateIsValid)}
-    </div>
+    </React.Fragment>
   );
 };
 

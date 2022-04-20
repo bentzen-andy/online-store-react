@@ -23,11 +23,11 @@ const CartIcon = ({ loginState, email, cart }) => {
 
   return (
     <div className={css['cart-icon']}>
-      {userText}
-      <Link to="/cart">
-        <FaShoppingCart />({getCartQuantity()})
+      <div className={css['cart-icon__text']}>{userText}</div>
+      <Link to="/cart" className={css['cart-icon__icon']}>
+        <FaShoppingCart />
+        <div className={css['cart-icon__qty']}>({getCartQuantity()})</div>
       </Link>
-      {/* )} */}
     </div>
   );
 };

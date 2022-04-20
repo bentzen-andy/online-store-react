@@ -17,8 +17,7 @@ const InputMonth = ({
   creditCardExpireMonthIsValid,
 }) => {
   return (
-    <div className={css['form-control']}>
-      Expiration Month:
+    <React.Fragment>
       <select
         name="month"
         id="month"
@@ -45,7 +44,7 @@ const InputMonth = ({
         creditCardExpireMonthIsTouched,
         creditCardExpireMonthIsValid
       )}
-    </div>
+    </React.Fragment>
   );
 };
 

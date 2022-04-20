@@ -31,10 +31,11 @@ const Cart = ({
   );
 
   return (
-    <div className={css['cart']}>
+    <div className={`${css['cart']} container`}>
       {cartContents.map((item) => (
         <CartProduct
           key={item.productID}
+          imageUrl={item.imageUrl}
           name={item.name}
           quantity={item.quantity}
           price={item.price}
@@ -42,12 +43,16 @@ const Cart = ({
           changeProductQuantity={changeProductQuantity}
         />
       ))}
-      {cartContents.length === 0
-        ? 'Shopping cart is empty.'
-        : `Total: ${totalCost}`}
+      <div className={css['cart__total']}>
+        {cartContents.length === 0
+          ? 'Shopping cart is empty.'
+          : `Total: ${totalCost}`}
+      </div>
       {cartContents.length > 0 && !orderFromIsVisible && (
         <div>
-          <button onClick={showOrderForm}>Create an Order</button>
+          <button className="btn" onClick={showOrderForm}>
+            Create an Order
+          </button>
         </div>
       )}
       {cartContents.length > 0 && orderFromIsVisible && (

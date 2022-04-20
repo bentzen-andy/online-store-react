@@ -37,8 +37,8 @@ const OrderForm = ({ cartContents, email, emptyShoppingCart }) => {
     customerInfo.creditCardExpireYear = creditCardExpireYear;
     customerInfo.creditCardCVV = creditCardCVV;
 
-    // fetch('http://localhost:8080/order', {
-    fetch('https://atb-online-store-api.herokuapp.com/order', {
+    fetch('http://localhost:8080/order', {
+      // fetch('https://atb-online-store-api.herokuapp.com/order', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -185,7 +185,7 @@ const OrderForm = ({ cartContents, email, emptyShoppingCart }) => {
     creditCardCVVIsValid;
 
   return (
-    <React.Fragment>
+    <div className={css['order-form']}>
       <form>
         <div className={css['form-group']}>
           <label htmlFor="first-name">First Name</label>
@@ -251,15 +251,18 @@ const OrderForm = ({ cartContents, email, emptyShoppingCart }) => {
           {getValidationText(cityIsTouched, cityIsValid)}
         </div>
 
-        <InputUsStates
-          className={css['form-group']}
-          stateChangeHandler={stateChangeHandler}
-          stateBlurHandler={stateBlurHandler}
-          state={state}
-          getValidationText={getValidationText}
-          stateIsValid={stateIsValid}
-          stateIsTouched={stateIsTouched}
-        />
+        <div className={css['form-group']}>
+          <label htmlFor="state">State</label>
+          <InputUsStates
+            className={css['form-group']}
+            stateChangeHandler={stateChangeHandler}
+            stateBlurHandler={stateBlurHandler}
+            state={state}
+            getValidationText={getValidationText}
+            stateIsValid={stateIsValid}
+            stateIsTouched={stateIsTouched}
+          />
+        </div>
 
         <div className={css['form-group']}>
           <label htmlFor="zip-code">Zip Code</label>
@@ -293,17 +296,20 @@ const OrderForm = ({ cartContents, email, emptyShoppingCart }) => {
           {getValidationText(creditCardIsTouched, creditCardIsValid)}
         </div>
 
-        <InputMonth
-          className={css['form-group']}
-          creditCardExpireMonthChangeHandler={
-            creditCardExpireMonthChangeHandler
-          }
-          creditCardExpireMonthBlurHandler={creditCardExpireMonthBlurHandler}
-          creditCardExpireMonth={creditCardExpireMonth}
-          getValidationText={getValidationText}
-          creditCardExpireMonthIsValid={creditCardExpireMonthIsValid}
-          creditCardExpireMonthIsTouched={creditCardExpireMonthIsTouched}
-        />
+        <div className={css['form-group']}>
+          <label htmlFor="credit-card-expiration-month">Expiration Month</label>
+          <InputMonth
+            className={css['form-group']}
+            creditCardExpireMonthChangeHandler={
+              creditCardExpireMonthChangeHandler
+            }
+            creditCardExpireMonthBlurHandler={creditCardExpireMonthBlurHandler}
+            creditCardExpireMonth={creditCardExpireMonth}
+            getValidationText={getValidationText}
+            creditCardExpireMonthIsValid={creditCardExpireMonthIsValid}
+            creditCardExpireMonthIsTouched={creditCardExpireMonthIsTouched}
+          />
+        </div>
 
         <div className={css['form-group']}>
           <label htmlFor="credit-card-expiration-year">
@@ -344,16 +350,16 @@ const OrderForm = ({ cartContents, email, emptyShoppingCart }) => {
       </form>
 
       {allInputsValid && (
-        <button onClick={handleSubmitOrder} className={css['btn']}>
+        <button onClick={handleSubmitOrder} className="btn">
           Submit Order
         </button>
       )}
       {!allInputsValid && (
-        <button onClick={handleSubmitOrder} className={css['btn']} disabled>
+        <button onClick={handleSubmitOrder} className="btn-disabled" disabled>
           Submit Order
         </button>
       )}
-    </React.Fragment>
+    </div>
   );
 };
 

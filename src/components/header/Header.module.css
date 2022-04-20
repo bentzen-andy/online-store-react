@@ -8,13 +8,17 @@
 
 .header ul {
   display: flex;
+  align-items: baseline;
   margin: 0;
   padding: 0;
 }
 
 .header li {
   list-style: none;
-  /* margin: auto; */
   padding: 0;
   margin: 1.5rem auto;
+}
+
+.logo {
+  font-weight: 700;
 }

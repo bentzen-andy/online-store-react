@@ -38,11 +38,19 @@ const Product = ({
     <div className={css['product']}>
       <img className={css['product__img']} src={imageUrl} alt={name} />
       <div className={css['product__description']}>
-        <div>{name}</div>
-        <div>{description}</div>
-        <div>{centsToDollars(price)}</div>
-        <div>Product Type: {category}</div>
-        <button onClick={handleAddToCart}>Add to Cart</button>
+        <div className={css['product__description--name']}>{name}</div>
+        <div className={css['product__description--description']}>
+          {description}
+        </div>
+        <div className={css['product__description--price']}>
+          {centsToDollars(price)}
+        </div>
+        <button
+          className={`${css['product__description--button']} btn`}
+          onClick={handleAddToCart}
+        >
+          Add to Cart
+        </button>
       </div>
     </div>
   );

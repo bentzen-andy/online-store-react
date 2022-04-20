@@ -59,67 +59,71 @@ const Registration = ({ registrationType, emptyShoppingCart }) => {
 
   return (
     <main className={css['registration']}>
-      {registrationType === 'SIGN_UP' && <h1>Sign Up:</h1>}
-      {registrationType === 'LOG_IN' && <h1>Log In:</h1>}
-      <form>
-        <div className={css['form-group']}>
-          <label htmlFor="email">Email</label>
-          <input
-            type="email"
-            className={css['form-control']}
-            name="email"
-            id="email"
-            onChange={handleEmailChange}
-            value={email}
-            aria-describedby="emailHelp"
-            placeholder="Email"
-            required
-          />
-        </div>
-        <div className={css['form-group']}>
-          <label htmlFor="password">Password</label>
-          <input
-            type="password"
-            className={css['form-control']}
-            name="password"
-            id="password"
-            onChange={handlePasswordChange}
-            value={password}
-            aria-describedby="passwordHelp"
-            placeholder="Password"
-            required
-          />
-        </div>
-        {registrationType === 'SIGN_UP' && (
+      <div className="container">
+        {registrationType === 'SIGN_UP' && <h1>Sign Up:</h1>}
+        {registrationType === 'LOG_IN' && <h1>Log In:</h1>}
+        <form>
           <div className={css['form-group']}>
-            <label htmlFor="password-confirmation">Password Confirmation</label>
+            <label htmlFor="email">Email</label>
             <input
-              type="password"
+              type="email"
               className={css['form-control']}
-              name="password-confirmation"
-              id="password-confirmation"
-              onChange={handlePasswordConfirmationChange}
-              value={enteredConfirmation}
-              aria-describedby="passwordConfirmationHelp"
-              placeholder="Password Confirmation"
+              name="email"
+              id="email"
+              onChange={handleEmailChange}
+              value={email}
+              aria-describedby="emailHelp"
+              placeholder="Email"
               required
             />
           </div>
-        )}
-        {validationText && (
-          <div className={css['validation-text']}>{validationText}</div>
-        )}
-        {registrationType === 'SIGN_UP' && (
-          <button onClick={handleSubmitSignUp} className={css['btn']}>
-            Sign Up
-          </button>
-        )}
-        {registrationType === 'LOG_IN' && (
-          <button onClick={handleSubmitLogIn} className={css['btn']}>
-            Log In
-          </button>
-        )}
-      </form>
+          <div className={css['form-group']}>
+            <label htmlFor="password">Password</label>
+            <input
+              type="password"
+              className={css['form-control']}
+              name="password"
+              id="password"
+              onChange={handlePasswordChange}
+              value={password}
+              aria-describedby="passwordHelp"
+              placeholder="Password"
+              required
+            />
+          </div>
+          {registrationType === 'SIGN_UP' && (
+            <div className={css['form-group']}>
+              <label htmlFor="password-confirmation">
+                Password Confirmation
+              </label>
+              <input
+                type="password"
+                className={css['form-control']}
+                name="password-confirmation"
+                id="password-confirmation"
+                onChange={handlePasswordConfirmationChange}
+                value={enteredConfirmation}
+                aria-describedby="passwordConfirmationHelp"
+                placeholder="Password Confirmation"
+                required
+              />
+            </div>
+          )}
+          {validationText && (
+            <div className={css['validation-text']}>{validationText}</div>
+          )}
+          {registrationType === 'SIGN_UP' && (
+            <button onClick={handleSubmitSignUp} className="btn">
+              Sign Up
+            </button>
+          )}
+          {registrationType === 'LOG_IN' && (
+            <button onClick={handleSubmitLogIn} className="btn">
+              Log In
+            </button>
+          )}
+        </form>
+      </div>
     </main>
   );
 };

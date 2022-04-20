@@ -1,5 +1,6 @@
 import React from 'react';
 import { centsToDollars } from '../../utils/money';
+import css from './CartProduct.module.css';
 
 /*
  * Andy Bentzen
@@ -9,6 +10,7 @@ import { centsToDollars } from '../../utils/money';
  */
 
 const CartProduct = ({
+  imageUrl,
   name,
   quantity,
   price,
@@ -26,18 +28,41 @@ const CartProduct = ({
   };
 
   return (
-    <div>
-      Item: {name} --- Qty: {quantity} --- Price:{' '}
-      {centsToDollars(price * quantity)}
-      <button id="increment" onClick={handleQuantityChange}>
-        ▲
-      </button>
-      <button id="decrement" onClick={handleQuantityChange}>
-        ▼
-      </button>
-      <button id="remove" onClick={handleQuantityChange}>
-        Remove Item
-      </button>
+    <div className={css['cart-item']}>
+      <div className={css['cart-product']}>
+        <div className={css['cart-product__img-and-name']}>
+          <span className={css['cart-product__img']}>
+            <img src={imageUrl} alt={name}></img>
+          </span>
+          <span className={css['cart-product__item']}>{name}</span>
+        </div>
+        <div className={css['cart-product__details']}>
+          <span className={css['cart-product__quantity']}>Qty: {quantity}</span>
+          <span className={css['cart-product__price']}>
+            {centsToDollars(price * quantity)}
+          </span>
+          <div className={css['cart-product__increment-decrement']}>
+            <button
+              className={`${css['cart-product__increment']} btn-sm`}
+              id="increment"
+              onClick={handleQuantityChange}
+            >
+              ▲
+            </button>
+            <button
+              className={`${css['cart-product__decrement']} btn-sm`}
+              id="decrement"
+              onClick={handleQuantityChange}
+            >
+              ▼
+            </button>
+          </div>
+          <button className="btn" id="remove" onClick={handleQuantityChange}>
+            Remove Item
+          </button>
+        </div>
+      </div>
+      <hr />
     </div>
   );
 };

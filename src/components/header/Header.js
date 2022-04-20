@@ -16,7 +16,9 @@ const Header = ({ loginState, email, cart }) => {
     <header className={css['header']}>
       <ul>
         <li>
-          <Link to="/">ATB Online Store</Link>
+          <Link to="/" className={css['logo']}>
+            ATB Online Store
+          </Link>
         </li>
 
         <li>

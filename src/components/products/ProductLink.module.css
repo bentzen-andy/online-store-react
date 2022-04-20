@@ -1,5 +1,7 @@
 .product-link {
   margin: 3rem 1rem;
+  height: auto;
+  width: 20rem;
 }
 
 .product-link__img {

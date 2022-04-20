@@ -1,4 +1,6 @@
 .cart-icon {
+  display: flex;
+  align-items: baseline;
   color: white;
   color: #6a7271;
   font-size: 1.2rem;
@@ -11,6 +13,14 @@
 
 .cart-icon svg {
   color: #01807e;
-  width: 3rem;
-  height: 3rem;
+  width: 19.2px;
+  height: 19.2px;
+}
+
+.cart-icon__text {
+  /* font-size: 2rem; */
+}
+.cart-icon__icon {
+  display: flex;
+  align-items: flex-end;
 }

@@ -35,3 +35,58 @@ a:hover,
 a:active {
   color: #62c7c5;
 }
+
+a svg:hover,
+a svg:active {
+  color: #62c7c5;
+}
+
+a div:hover,
+a div:active {
+  color: #62c7c5;
+}
+
+.btn {
+  margin: 1rem;
+  height: 2rem;
+  width: 8rem;
+  border-radius: 5px;
+  border: none;
+  background-color: #01807e;
+  color: white;
+}
+
+.btn-disabled {
+  margin: 1rem;
+  height: 2rem;
+  width: 8rem;
+  border-radius: 5px;
+  border: none;
+  background-color: #aaa6a6;
+  color: black;
+}
+
+.btn-sm {
+  height: 2rem;
+  width: 3.4rem;
+  border-radius: 3px;
+  border: none;
+  background-color: #01807e;
+  color: white;
+}
+
+.btn:hover,
+.btn:active {
+  background-color: #62c7c5;
+  color: black;
+}
+
+.container {
+  display: block;
+  margin: 3rem auto;
+  max-width: 90%;
+  padding: 3rem;
+  text-align: center;
+  border-radius: 16px;
+  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+}

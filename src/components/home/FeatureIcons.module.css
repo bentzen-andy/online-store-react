@@ -1,0 +1,19 @@
+.featured-icons {
+  display: flex;
+  justify-content: space-around;
+  margin: 3rem 10rem;
+  /* margin: 3rem auto; */
+}
+
+.featured-icons svg {
+  height: 10rem;
+  margin: 0 1rem;
+}
+
+.featured-icons__icon-content {
+  text-align: center;
+}
+
+.featured-icons h3 {
+  font-size: 1.8rem;
+}

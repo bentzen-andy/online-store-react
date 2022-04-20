@@ -1,3 +1,19 @@
+.order-form {
+  margin: 3rem 0;
+}
+
 .validation-text {
   color: darkred;
+}
+
+.form-group {
+  margin-top: 0.5rem;
+}
+
+.form-group label {
+  display: inline-block;
+  width: 12rem;
+  height: 2rem;
+  text-align: right;
+  margin-right: 0.8rem;
 }
