@@ -122,7 +122,11 @@ const App = () => {
             <Route
               path="/cart"
               exact
-              element={<div>Please sign in to view your cart.</div>}
+              element={
+                <div className={css['empty-cart']}>
+                  Please sign in to view your cart.
+                </div>
+              }
             />
           )}
           {loginState === 'LOGGED_IN' && (
